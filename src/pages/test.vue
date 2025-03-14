@@ -1,9 +1,11 @@
 <script setup>
 import { useMessage } from "naive-ui";
 const message = useMessage();
+const focusIndex = ref(0)
+const activeTab = ref('中文')
 // 管理所有的 Tab
 const tabs = ref(['中文', '英文']);
-const addLangVisible = ref(false)
+const addLangVisible = ref(false);
 // 當 Tab 被刪除時，從 tabs 陣列中移除
 const handleDeleteTab = (tab) => {
   const tabIndex = tabs.value.findIndex(panelName => panelName === tab);
@@ -27,10 +29,18 @@ const handleAddLan = (res) => {
   }
 }
 const handleCloseModal = () => {
-
   addLangVisible.value = false;
-
 }
+
+const focusTitle = (event) => {
+  let classList = event.target.classList
+  if (classList.contains('add-list') || classList.contains('el-icon-plus')) return
+  focusIndex.value = 'title'
+}
+const handleActiveTab = (res) => {
+  activeTab.value = res;
+}
+
 </script>
 
 <template>
@@ -41,12 +51,21 @@ const handleCloseModal = () => {
   />
   <div class="form-create-wrap">
     <div class="wrap">
-      <div class="header">
+      <div
+        class="item title"
+        @click="focusTitle($event)"
+        :class="{ 'title-focus': focusIndex === 'title' }"
+      >
         <h1 class="form-title">活動報名表單設計</h1>
         <Tab
           :tabs="tabs"
           @deleteTab="handleDeleteTab"
           @AddTab="handleAddTab"
+          @activeTab="handleActiveTab"
+        />
+        <Title
+          :tabs="tabs"
+          :tabLang="activeTab"
         />
       </div>
     </div>
@@ -55,6 +74,9 @@ const handleCloseModal = () => {
 
 <style scoped>
 .form-create-wrap {
+  --green: #4ca2ae;
+  --grey: rgba(0, 0, 0, .5);
+  position: relative;
   width: 80%;
   min-height: 400px;
   margin: 2rem auto;
@@ -69,11 +91,49 @@ const handleCloseModal = () => {
   padding: 2rem 4rem;
 }
 
-.header {
+.form-create-wrap .item {
   width: 100%;
+  padding: 16px 24px 24px 42px;
 }
+
+.form-create-wrap .title-focus {
+  border-left-color: var(--green) !important;
+}
+
+.form-create-wrap .title {
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.form-create-wrap .add-list {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e9e9e9;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 
 .form-title {
   margin-bottom: 2.5rem;
+}
+
+@media (min-width: 520px) {
+  .form-create-wrap {
+    width: 98%;
+  }
+}
+
+@media (max-width: 920px) {
+  .form-create-wrap .wrap {
+    width: 98%;
+  }
 }
 </style>

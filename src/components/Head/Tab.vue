@@ -3,11 +3,12 @@ import { NTabs, NTabPane } from 'naive-ui';
 
 // 定義接收的 props
 const props = defineProps({
+  activeTab: String,
   tabs: Array,  // Tab 名稱陣列
 });
-
+const activeTab = ref('中文');
 // 定義 emit 事件
-const emit = defineEmits(['deleteTab', 'AddTab']);
+const emit = defineEmits(['deleteTab', 'AddTab', 'activeTab']);
 
 // 動態生成 closable 屬性，當 tabs 超過 1 時，才可以關閉
 const closable = computed(() => props.tabs.length > 1);
@@ -21,6 +22,10 @@ const handleAddTab = () => {
 const handleClose = (name) => {
   emit('deleteTab', name);
 };
+
+const handleTabChange = () => {
+  emit('activeTab', activeTab.value);
+}
 </script>
 
 <template>
@@ -30,6 +35,8 @@ const handleClose = (name) => {
     :addable="true"
     :closable="closable"
     tab-style="min-width: 80px;"
+    v-model:value="activeTab"
+    @update:value="handleTabChange"
     @close="handleClose"
     @add="handleAddTab"
   >
