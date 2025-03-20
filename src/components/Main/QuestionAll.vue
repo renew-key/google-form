@@ -102,6 +102,7 @@ const emit = defineEmits(['focusItem', 'copyListFn', 'deleteListFn', 'addListFn'
               @deleteRadioFn="handleDeleteRadioFn"
               @addRadioFn="handleAddRadioFn"
             />
+            <QuestionText v-if="element.types === '文本題'" />
           </div>
         </div>
       </template>
