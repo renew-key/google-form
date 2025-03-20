@@ -24,7 +24,7 @@ const emit = defineEmits(['deleteRadioFn', 'addRadioFn']);
       :key="i"
     >
       <div
-        class="icon-radio"
+        class="icon-radio-list"
         v-show="element.types === '下拉列表'"
       >{{ i + 1 }}.</div>
       <div
@@ -49,7 +49,7 @@ const emit = defineEmits(['deleteRadioFn', 'addRadioFn']);
       v-if="focusIndex === index"
     >
       <div
-        class="icon-radio"
+        class="icon-radio-list"
         v-if="element.types === '下拉列表'"
       >
         {{ content.answer.length + 1 }}.
@@ -80,6 +80,13 @@ const emit = defineEmits(['deleteRadioFn', 'addRadioFn']);
 }
 
 .q-radio .icon-radio {
+  width: 15px;
+  height: 15px;
+  border: 2px solid transparent;
+  margin-right: 15px;
+}
+
+.icon-radio-list {
   width: 15px;
   border: 2px solid transparent;
   margin-right: 15px;
