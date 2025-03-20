@@ -1,14 +1,12 @@
 <script setup>
 import { reactive, computed } from 'vue';
 
-// 定義語言代碼和語言名稱
-const langCode = ['cn', 'en', 'kr', 'jp', 'fr', 'de', 'ru', 'sp', 'po', 'it', 'nl', 'id', 'tr', 'thai', 'zh', 'fa', 'ro', 'ar'];
-const langList = ['中文', '英文', '韓語', '日語', '法語', '德語', '俄語', '西班牙語', '葡萄牙語', '義大利語', '荷蘭語', '印度語', '土耳其語', '泰語', '繁體中文', '波斯語', '羅馬尼亞語', '阿拉伯語'];
-
 // 定義接收的 props
 const props = defineProps({
   tabLang: String, // 當前選中的語言
   tabs: Array, // Tab 名稱陣列
+  langCode: Array,
+  langList: Array,
 });
 
 // 設定 name 資料
@@ -19,7 +17,7 @@ const name = reactive([{
 }]);
 
 // 計算屬性，將當前選中的語言對應到 language 變數
-const currentLang = computed(() => langCode[langList.indexOf(props.tabLang)]);
+const currentLang = computed(() => props.langCode[props.langList.indexOf(props.tabLang)]);
 
 // 篩選出對應語言的問卷項目
 const filteredName = computed(() => {
