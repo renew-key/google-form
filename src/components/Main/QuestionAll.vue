@@ -52,7 +52,64 @@ const addFormFn = (list) => {
   });
 };
 
+const handleCopyList = (event, index) => {
+  let dataCopy = JSON.parse(JSON.stringify(questions[index]))
+  questions.splice(index, 0, dataCopy)
+  emit('focusItem', event, questions.length - 1)
+}
+
+const handleDeleteList = (event, i) => {
+  questions.splice(i, 1)
+  emit('focusItem', event, i === 0 && questions.length > 0 ? i : i - 1)
+}
+
+const handleAddList = (event, index) => {
+  // console.log(props.tabs)
+  let codeList = props.tabs.map((i) => {
+    return props.langCode[props.langList.indexOf(i)]
+  })
+  let contentList = codeList.map((i) => {
+    return {
+      language: i,
+      title: '',
+      answer: [{
+        answer_id: 1,
+        description: null
+      }],
+      line_answer: {
+        line_value: 1,
+        line_end_value: 5,
+        line_tag: '',
+        line_end_tag: ''
+      },
+      text_answer: ''
+    }
+  })
+  let list = {
+    question_id: questions.length + 1,
+    types: '單選題',
+    is_required: false,
+    content: contentList
+  }
+
+  questions.splice(index + 1, 0, list);
+  emit('focusItem', event, index + 1)
+  nextTick(index);
+
+}
+
 const emit = defineEmits(['focusItem', 'copyListFn', 'deleteListFn', 'addListFn', 'questionsLen']);
+
+nextTick((index) => {
+  // 滾動到新增的項目
+  const newQuestionElement = document.getElementById(`q-li-${index + 1}`);
+  if (newQuestionElement) {
+    newQuestionElement.scrollIntoView({
+      behavior: 'smooth', // 平滑滾動
+      block: 'center', // 將新項目置中顯示
+    });
+  }
+});
 </script>
 
 <template>
@@ -108,6 +165,14 @@ const emit = defineEmits(['focusItem', 'copyListFn', 'deleteListFn', 'addListFn'
               :content="content"
               :lineOptions="lineOptions"
               :lineEndOptions="lineEndOptions"
+            />
+            <QuestionActions
+              v-if="focusIndex === index"
+              :element="element"
+              :index="index"
+              @copyListFn="handleCopyList"
+              @deleteListFn="handleDeleteList"
+              @addListFn="handleAddList"
             />
           </div>
         </div>

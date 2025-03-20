@@ -1,5 +1,7 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue';
+import { TrashOutline, CopyOutline, Add, CloseSharp } from "@vicons/ionicons5";
+import { NIcon, NSwitch, NCheckbox, NTabs, NModal, useMessage, NButton, NTabPane, NSelect } from "naive-ui";
 
 const props = defineProps({
   element: Object,
@@ -16,7 +18,7 @@ const emit = defineEmits(['copyListFn', 'deleteListFn', 'addListFn']);
         <n-icon
           size="20"
           class="icon-copy"
-          @click="emit('copyListFn', index)"
+          @click="emit('copyListFn', $event, index)"
         >
           <CopyOutline />
         </n-icon>
@@ -25,7 +27,7 @@ const emit = defineEmits(['copyListFn', 'deleteListFn', 'addListFn']);
         <n-icon
           size="20"
           class="el-icon-delete"
-          @click="emit('deleteListFn', index)"
+          @click="emit('deleteListFn', $event, index)"
         >
           <TrashOutline />
         </n-icon>
@@ -34,7 +36,7 @@ const emit = defineEmits(['copyListFn', 'deleteListFn', 'addListFn']);
         <n-icon
           class="el-icon-plus"
           size="20"
-          @click="emit('addListFn', index)"
+          @click="emit('addListFn', $event, index)"
         >
           <Add />
         </n-icon>
@@ -46,3 +48,52 @@ const emit = defineEmits(['copyListFn', 'deleteListFn', 'addListFn']);
     </ul>
   </div>
 </template>
+<style scoped>
+.option-wrap {
+  overflow: hidden;
+  border-top: 1px solid lightgray;
+}
+
+.option-wrap .option-list {
+  float: right;
+}
+
+.option-wrap .option-list li {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  float: left;
+  list-style: none;
+  margin: 20px 10px 20px 25px;
+}
+
+.option-wrap .option-list .icon-copy {
+  font-size: 20px;
+}
+
+.option-wrap .option-list .el-icon-delete {
+  font-size: 21px;
+  vertical-align: middle;
+}
+
+.option-wrap .option-list i {
+  cursor: pointer;
+}
+
+.option-wrap .lang-li {
+  margin: 15px 8px;
+  display: flex;
+  align-items: center;
+}
+
+.option-wrap .option-list .lang-li span {
+  margin-left: 10px;
+  cursor: pointer;
+  color: var(--green);
+  font-weight: bold;
+}
+
+.option-wrap .option-list .el-select {
+  width: 120px;
+}
+</style>

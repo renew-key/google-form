@@ -49,6 +49,7 @@ const handleActiveTab = (res) => {
 }
 
 const focusItem = (event, i) => {
+  // console.log(event)
   let classList = event.target.classList
   if (classList.contains('el-icon-delete') || classList.contains('icon-copy') || focusIndex.value === i) return
   focusIndex.value = i
