@@ -8,3 +8,32 @@ input,
 textarea {
   all: unset;
 }
+
+.form-create-wrap .li {
+  position: relative;
+  margin-bottom: 15px;
+
+}
+
+.form-create-wrap .li:after {
+  content: '';
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  transform: scaleX(0);
+  background-color: var(--green);
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+}
+
+.form-create-wrap .li:hover:after {
+  border-bottom: 1px solid transparent;
+  transform: scaleX(1);
+}
+
+.form-create-wrap .li .form-title {
+  font-size: 24px;
+}

@@ -2,7 +2,7 @@
 defineProps({
   tabs: Array,
   activeTab: String,
-  focusIndex: String,
+  focusIndex: [String, Number],
   langCode: Array,
   langList: Array,
 });
@@ -14,7 +14,7 @@ const emit = defineEmits(['focusTitle', 'deleteTab', 'addTab', 'activeTab']);
   <div
     class="item title"
     @click="emit('focusTitle', $event)"
-    :class="{ 'title-focus': focusIndex === 'title' }"
+    :class="{ 'title-focus': focusIndex === -1 }"
   >
     <h1 class="form-title">活動報名表單設計</h1>
     <Tab

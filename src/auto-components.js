@@ -16,6 +16,7 @@ declare module 'vue' {
     QuestionLinearScale: typeof import('./components/Main/QuestionLinearScale.vue')['default']
     QuestionOptions: typeof import('./components/Main/QuestionOptions.vue')['default']
     QuestionText: typeof import('./components/Main/QuestionText.vue')['default']
+    QuestionTitle: typeof import('./components/Main/QuestionTitle.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Tab: typeof import('./components/Head/Tab.vue')['default']

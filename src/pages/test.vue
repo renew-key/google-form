@@ -2,9 +2,9 @@
 import { useMessage, NIcon } from "naive-ui";
 import { TrashOutline, CopyOutline, Add, CloseSharp } from "@vicons/ionicons5";
 const message = useMessage();
-const focusIndex = ref("0");
+const focusIndex = ref(0);
 const activeTab = ref('中文');
-const isShowTop = ref(false);
+const isShowAdd = ref(false);
 
 // 定義語言代碼和語言名稱
 const langCode = ['cn', 'en', 'kr', 'jp', 'fr', 'de', 'ru', 'sp', 'po', 'it', 'nl', 'id', 'tr', 'thai', 'zh', 'fa', 'ro', 'ar'];
@@ -42,14 +42,29 @@ const handleCloseModal = () => {
 const focusTitle = (event) => {
   let classList = event.target.classList
   if (classList.contains('add-list') || classList.contains('el-icon-plus')) return
-  focusIndex.value = 'title'
+  focusIndex.value = -1
 }
 const handleActiveTab = (res) => {
   activeTab.value = res;
 }
 
+const focusItem = (event, i) => {
+  let classList = event.target.classList
+  if (classList.contains('el-icon-delete') || classList.contains('icon-copy') || focusIndex.value === i) return
+  focusIndex.value = i
+}
+
+
 const addListFn = (index) => {
 
+}
+const handleIndex = (res) => {
+  console.log(res)
+  if (res >= 0) {
+    isShowAdd.value = true
+  } else {
+    isShowAdd.value = false
+  }
 }
 
 </script>
@@ -73,7 +88,10 @@ const addListFn = (index) => {
         @addTab="handleAddTab"
         @activeTab="handleActiveTab"
       />
-      <div class="add-list">
+      <div
+        class="add-list"
+        v-show="isShowAdd"
+      >
         <n-icon
           @click="addListFn"
           class="el-icon-plus"
@@ -82,7 +100,15 @@ const addListFn = (index) => {
           <Add />
         </n-icon>
       </div>
-
+      <QuestionAll
+        :langCode="langCode"
+        :langList="langList"
+        :tabs="tabs"
+        :activeTab="activeTab"
+        :focusIndex="focusIndex"
+        @focusItem="focusItem"
+        @totalIndex="handleIndex"
+      />
     </div>
   </div>
 </template>
@@ -103,7 +129,8 @@ const addListFn = (index) => {
   display: flex;
   background-color: #fff;
   box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .1);
-  padding: 2rem 4rem;
+  /*padding: 2rem 4rem;*/
+  flex-direction: column;
 }
 
 .form-create-wrap .add-list {
@@ -115,7 +142,7 @@ const addListFn = (index) => {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 0px;
+  bottom: -15px;
   display: flex;
   align-items: center;
   justify-content: center;
