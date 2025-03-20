@@ -14,8 +14,8 @@ const props = defineProps({
   focusIndex: [String, Number],
 });
 
-const questions = reactive([
-  {
+const data = reactive({
+  question: [{
     question_id: 1,
     types: '單選題',
     is_required: false,
@@ -23,24 +23,34 @@ const questions = reactive([
       {
         language: 'cn',
         title: '',
-        answer: [{ answer_id: 1, description: null }],
-        line_answer: { line_value: 1, line_end_value: 5, line_tag: '', line_end_tag: '' },
+        answer: [{
+          answer_id: 1,
+          description: null
+        }],
+        line_answer: {
+          line_value: 1,
+          line_end_value: 5,
+          line_tag: '',
+          line_end_tag: ''
+        },
         text_answer: ''
       }
     ]
-  }
-]);
+  }]
+})
 
-const onMove = () => {
-  questions.forEach((q, i) => (q.question_id = i + 1));
-};
-
+const onMove = ({ relatedContext, draggedContext }) => {
+  let relatedIndex = relatedContext.index
+  let index = draggedContext.index
+  relatedContext.element.question_id = index + 1
+  draggedContext.element.question_id = relatedIndex + 1
+}
 const handleDeleteRadioFn = (i, j, k) => {
-  questions[i].content[j].answer.splice(k, 1);
+  data.question[i].content[j].answer.splice(k, 1);
 };
 
 const handleAddRadioFn = (i, j) => {
-  let list = questions[i].content[j].answer;
+  let list = data.question[i].content[j].answer;
   addFormFn(list);
 };
 
@@ -53,21 +63,26 @@ const addFormFn = (list) => {
 };
 
 const handleCopyList = (event, index) => {
-  let dataCopy = JSON.parse(JSON.stringify(questions[index]))
-  questions.splice(index, 0, dataCopy)
-  emit('focusItem', event, questions.length - 1)
+  console.log("Copy")
+  let dataCopy = JSON.parse(JSON.stringify(data.question[index]))
+  data.question.splice(index, 0, dataCopy)
+  // emit('focusItem', event, questions.length - 1)
+  nextTick(index);
 }
 
 const handleDeleteList = (event, i) => {
-  questions.splice(i, 1)
-  emit('focusItem', event, i === 0 && questions.length > 0 ? i : i - 1)
+  console.log("Delete")
+  data.question.splice(i, 1)
+  // emit('focusItem', event, i === 0 && questions.length > 0 ? i : i - 1)
 }
 
 const handleAddList = (event, index) => {
+  console.log("add")
   // console.log(props.tabs)
   let codeList = props.tabs.map((i) => {
     return props.langCode[props.langList.indexOf(i)]
   })
+
   let contentList = codeList.map((i) => {
     return {
       language: i,
@@ -85,16 +100,18 @@ const handleAddList = (event, index) => {
       text_answer: ''
     }
   })
+  console.log(contentList)
   let list = {
-    question_id: questions.length + 1,
+    question_id: data.question.length + 1,
     types: '單選題',
     is_required: false,
     content: contentList
   }
 
-  questions.splice(index + 1, 0, list);
-  emit('focusItem', event, index + 1)
-  nextTick(index);
+  data.question.splice(index + 1, 0, list);
+
+  // emit('focusItem', event, index + 1)
+  // nextTick(index);
 
 }
 
@@ -115,10 +132,9 @@ nextTick((index) => {
 <template>
   <div class="q-wrap">
     <draggable
-      v-model="questions"
+      v-model="data.question"
       group="people"
       item-key="question_id"
-      :move="onMove"
       @start="drag = true"
       @end="drag = false"
     >
