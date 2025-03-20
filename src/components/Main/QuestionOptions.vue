@@ -68,3 +68,69 @@ const emit = defineEmits(['deleteRadioFn', 'addRadioFn']);
     </div>
   </div>
 </template>
+<style scoped>
+.q-item {
+  margin-bottom: 10px;
+}
+
+.q-radio {
+  margin: 15px auto;
+  display: flex;
+  align-items: center;
+}
+
+.q-radio .icon-radio {
+  width: 15px;
+  height: 15px;
+  border: 2px solid transparent;
+  margin-right: 15px;
+}
+
+.q-radio .icon-cirle {
+  border: 2px solid lightgray;
+  border-radius: 50%;
+}
+
+.q-radio .icon-square {
+  border: 2px solid lightgray;
+  border-radius: 0;
+}
+
+.q-radio input,
+.q-radio button {
+  flex: 2;
+  margin-right: 15px;
+  /* border: 1px solid transparent;*/
+}
+
+.q-radio input:focus {
+  border-bottom: 1px solid lightgray;
+}
+
+.q-radio button:focus {
+  border-bottom: 1px solid lightgray;
+}
+
+.q-radio .n-icon {
+  flex: 1;
+  flex-grow: 0;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.q-radio .radio-add {
+  color: var(--green);
+  font-weight: bold;
+  cursor: pointer;
+  flex: 0;
+}
+
+.q-radio button {
+  flex: 0.2;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  text-align: left;
+  min-width: 80px;
+}
+</style>
