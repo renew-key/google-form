@@ -81,7 +81,6 @@ const emit = defineEmits(['deleteRadioFn', 'addRadioFn']);
 
 .q-radio .icon-radio {
   width: 15px;
-  height: 15px;
   border: 2px solid transparent;
   margin-right: 15px;
 }

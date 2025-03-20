@@ -103,6 +103,12 @@ const emit = defineEmits(['focusItem', 'copyListFn', 'deleteListFn', 'addListFn'
               @addRadioFn="handleAddRadioFn"
             />
             <QuestionText v-if="element.types === '文本題'" />
+            <QuestionLinearScale
+              v-if="element.types === '線性量表'"
+              :content="content"
+              :lineOptions="lineOptions"
+              :lineEndOptions="lineEndOptions"
+            />
           </div>
         </div>
       </template>
