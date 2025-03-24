@@ -63,7 +63,7 @@ const addFormFn = (list) => {
 };
 
 const handleCopyList = (index) => {
-  console.log("Copy")
+  // console.log("Copy")
   let dataCopy = JSON.parse(JSON.stringify(data.question[index]))
   data.question.splice(index, 0, dataCopy)
   // emit('focusItem', event, questions.length - 1)
@@ -101,7 +101,7 @@ const handleAddList = (index) => {
       text_answer: ''
     }
   })
-  console.log(contentList)
+  // console.log(contentList)
   let list = {
     question_id: data.question.length + 1,
     types: '單選題',

@@ -1,6 +1,6 @@
 <script setup>
 import { NIcon } from 'naive-ui';
-import { TrashOutline, CopyOutline, Add, CloseSharp } from "@vicons/ionicons5";
+import { CloseSharp } from "@vicons/ionicons5";
 
 const props = defineProps({
   element: Object,

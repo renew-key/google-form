@@ -58,15 +58,14 @@ const focusItem = (event, i) => {
 
 
 const addListFn = (index) => {
-
-
   if (QuestionAdd.value) {
     QuestionAdd.value.handleAddList(index)
   }
+  isShowAdd.value = false
 }
 const handleIndex = (res) => {
   console.log(res)
-  if (res >= 0) {
+  if (res <= 0) {
     isShowAdd.value = true
   } else {
     isShowAdd.value = false
@@ -107,7 +106,7 @@ const handleIndex = (res) => {
         </n-icon>
       </div>
       <QuestionAll
-        ref="Question"
+        ref="QuestionAdd"
         :langCode="langCode"
         :langList="langList"
         :tabs="tabs"
@@ -149,7 +148,7 @@ const handleIndex = (res) => {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -15px;
+  bottom: 66px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -174,15 +173,18 @@ const handleIndex = (res) => {
   padding: 10px 12px;
 }*/
 
-@media (min-width: 520px) {
-  .form-create-wrap {
-    width: 98%;
-  }
-}
+
 
 @media (max-width: 920px) {
-  .form-create-wrap .wrap {
-    width: 98%;
+  .form-create-wrap {
+    width: 100%;
+    padding-right: 0.2rem;
+    margin: 0;
   }
+
+  .form-create-wrap .wrap {
+    width: 100%;
+  }
+
 }
 </style>
