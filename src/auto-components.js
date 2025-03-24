@@ -8,6 +8,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    BlockTitle: typeof import('./components/Head/BlockTitle.vue')['default']
+    BTitle: typeof import('./components/Head/BTitle.vue')['default']
     FormTab: typeof import('./components/Head/FormTab.vue')['default']
     FormTitle: typeof import('./components/Head/FormTitle.vue')['default']
     LangModal: typeof import('./components/Head/LangModal.vue')['default']

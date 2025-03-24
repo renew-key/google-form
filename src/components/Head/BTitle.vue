@@ -9,11 +9,9 @@ const props = defineProps({
   langList: Array,
 });
 
-
-
 // 設定 name 資料
 const name = reactive([{
-  questionnaire_name: '',
+  questionnaire_title: '',
   desc: '',
   language: 'cn' // 預設語言為 'cn'
 }]);
@@ -47,18 +45,18 @@ const filteredName = computed(() => {
       <textarea
         style="font-size: 1.2rem;"
         class="title-area"
-        placeholder="問卷標題"
-        v-model="i.questionnaire_name"
+        placeholder="區塊標題"
+        v-model="i.questionnaire_title"
       ></textarea>
     </div>
 
     <!-- 問卷說明 -->
-    <div class="li">
+    <!-- <div class="li">
       <textarea
         placeholder="問卷說明"
         v-model="i.desc"
       ></textarea>
-    </div>
+    </div> -->
   </div>
 </template>
 

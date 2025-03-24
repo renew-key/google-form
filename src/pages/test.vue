@@ -45,6 +45,11 @@ const focusTitle = (event) => {
   if (classList.contains('add-list') || classList.contains('el-icon-plus')) return
   focusIndex.value = -1
 }
+const focusBlockTitle = (event) => {
+  let classList = event.target.classList
+  if (classList.contains('add-list') || classList.contains('el-icon-plus')) return
+  focusIndex.value = -2
+}
 const handleActiveTab = (res) => {
   activeTab.value = res;
 }
@@ -84,7 +89,7 @@ const handleIndex = (res) => {
   />
   <div class="form-create-wrap">
     <div class="wrap">
-      <FormTab
+      <FormTitle
         :langCode="langCode"
         :langList="langList"
         :tabs="tabs"
@@ -95,13 +100,17 @@ const handleIndex = (res) => {
         @addTab="handleAddTab"
         @activeTab="handleActiveTab"
       />
-      <FormTitle
+    </div>
+  </div>
+  <div class="form-create-wrap">
+    <div class="wrap">
+      <BlockTitle
         :langCode="langCode"
         :langList="langList"
         :tabs="tabs"
         :activeTab="activeTab"
         :focusIndex="focusIndex"
-        @focusTitle="focusTitle"
+        @focusBlockTitle="focusBlockTitle"
         @deleteTab="handleDeleteTab"
         @addTab="handleAddTab"
         @activeTab="handleActiveTab"
@@ -137,7 +146,7 @@ const handleIndex = (res) => {
   --grey: rgba(0, 0, 0, .5);
   position: relative;
   width: 80%;
-  min-height: 400px;
+
   margin: 2rem auto;
 }
 

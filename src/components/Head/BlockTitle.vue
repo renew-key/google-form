@@ -7,22 +7,16 @@ defineProps({
   langList: Array,
 });
 
-const emit = defineEmits(['focusTitle', 'deleteTab', 'addTab', 'activeTab']);
+const emit = defineEmits(['focusBlockTitle', 'deleteTab', 'addTab', 'activeTab']);
 </script>
 
 <template>
   <div
     class="item title"
-    @click="emit('focusTitle', $event)"
-    :class="{ 'title-focus': focusIndex === -1 }"
+    @click="emit('focusBlockTitle', $event)"
+    :class="{ 'title-focus': focusIndex === -2 }"
   >
-    <Tab
-      :tabs="tabs"
-      @deleteTab="emit('deleteTab', $event)"
-      @AddTab="emit('addTab')"
-      @activeTab="emit('activeTab', $event)"
-    />
-    <Title
+    <BTitle
       :langCode="langCode"
       :langList="langList"
       :tabs="tabs"
