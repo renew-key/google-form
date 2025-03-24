@@ -3,12 +3,17 @@ import { NTabs, NTabPane } from 'naive-ui';
 
 // 定義接收的 props
 const props = defineProps({
+  tabLang: String, // 當前選中的語言
   activeTab: String,
   tabs: Array,  // Tab 名稱陣列
 });
 const activeTab = ref('中文');
 // 定義 emit 事件
 const emit = defineEmits(['deleteTab', 'AddTab', 'activeTab']);
+
+watch(() => props.tabLang, (newLang) => {
+  activeTab.value = newLang
+});
 
 // 動態生成 closable 屬性，當 tabs 超過 1 時，才可以關閉
 const closable = computed(() => props.tabs.length > 1);

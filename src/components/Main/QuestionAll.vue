@@ -41,7 +41,7 @@ const data = reactive({
   }]
 })
 watch(() => props.activeTab, (newTab) => {
-  console.log(newTab)
+  // console.log(newTab)
   // 重設 data.question 只保留一個初始的問題
   data.question = [{
     question_id: 1,
@@ -49,7 +49,7 @@ watch(() => props.activeTab, (newTab) => {
     is_required: false,
     content: [
       {
-        language: 'cn',
+        language: newTab,
         title: '',
         answer: [{
           answer_id: 1,
@@ -67,7 +67,7 @@ watch(() => props.activeTab, (newTab) => {
     ]
   }];
 
-  console.log(data)
+  // console.log(data)
 });
 
 

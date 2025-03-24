@@ -17,6 +17,7 @@ const emit = defineEmits(['focusTitle', 'deleteTab', 'addTab', 'activeTab']);
     :class="{ 'title-focus': focusIndex === -1 }"
   >
     <Tab
+      :tabLang="activeTab"
       :tabs="tabs"
       @deleteTab="emit('deleteTab', $event)"
       @AddTab="emit('addTab')"

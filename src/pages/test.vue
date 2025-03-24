@@ -16,10 +16,15 @@ const tabs = ref(['中文']);
 const addLangVisible = ref(false);
 // 當 Tab 被刪除時，從 tabs 陣列中移除
 const handleDeleteTab = (tab) => {
+  // console.log(tab)
   const tabIndex = tabs.value.findIndex(panelName => panelName === tab);
   if (tabIndex !== -1) {
     tabs.value.splice(tabIndex, 1);
   }
+  if (activeTab.value === tab) {
+    activeTab.value = tabs.value.length > 0 ? tabs.value[tabs.value.length - 1] : ''; // 若有其他 tab，切換到第一個；若沒有則設為空
+  }
+  // console.log(activeTab.value)
 };
 
 // 當新增 Tab 時，將新的 Tab 添加到 tabs 陣列
