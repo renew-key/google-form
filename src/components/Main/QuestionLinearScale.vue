@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps } from 'vue';
 import { NSelect } from "naive-ui";
 const lineOptions = [
   {

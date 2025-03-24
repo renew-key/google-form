@@ -5,6 +5,7 @@ const message = useMessage();
 const focusIndex = ref(0);
 const activeTab = ref('中文');
 const isShowAdd = ref(false);
+const QuestionAdd = ref(null)
 
 // 定義語言代碼和語言名稱
 const langCode = ['cn', 'en', 'kr', 'jp', 'fr', 'de', 'ru', 'sp', 'po', 'it', 'nl', 'id', 'tr', 'thai', 'zh', 'fa', 'ro', 'ar'];
@@ -58,6 +59,10 @@ const focusItem = (event, i) => {
 
 const addListFn = (index) => {
 
+
+  if (QuestionAdd.value) {
+    QuestionAdd.value.handleAddList(index)
+  }
 }
 const handleIndex = (res) => {
   console.log(res)
@@ -94,7 +99,7 @@ const handleIndex = (res) => {
         v-show="isShowAdd"
       >
         <n-icon
-          @click="addListFn"
+          @click="addListFn(0)"
           class="el-icon-plus"
           size="20"
         >
@@ -102,13 +107,14 @@ const handleIndex = (res) => {
         </n-icon>
       </div>
       <QuestionAll
+        ref="Question"
         :langCode="langCode"
         :langList="langList"
         :tabs="tabs"
         :activeTab="activeTab"
         :focusIndex="focusIndex"
         @focusItem="focusItem"
-        @totalIndex="handleIndex"
+        @questionsLen="handleIndex"
       />
     </div>
   </div>

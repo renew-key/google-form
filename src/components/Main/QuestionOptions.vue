@@ -1,6 +1,4 @@
 <script setup>
-
-import { defineProps, defineEmits } from 'vue';
 import { NIcon } from 'naive-ui';
 import { TrashOutline, CopyOutline, Add, CloseSharp } from "@vicons/ionicons5";
 

@@ -62,7 +62,7 @@ const addFormFn = (list) => {
   });
 };
 
-const handleCopyList = (event, index) => {
+const handleCopyList = (index) => {
   console.log("Copy")
   let dataCopy = JSON.parse(JSON.stringify(data.question[index]))
   data.question.splice(index, 0, dataCopy)
@@ -70,14 +70,15 @@ const handleCopyList = (event, index) => {
   nextTick(index);
 }
 
-const handleDeleteList = (event, i) => {
+const handleDeleteList = (i) => {
   console.log("Delete")
   data.question.splice(i, 1)
+  emit('questionsLen', i)
   // emit('focusItem', event, i === 0 && questions.length > 0 ? i : i - 1)
 }
 
-const handleAddList = (event, index) => {
-  console.log("add")
+const handleAddList = (index) => {
+  // console.log("add")
   // console.log(props.tabs)
   let codeList = props.tabs.map((i) => {
     return props.langCode[props.langList.indexOf(i)]
@@ -115,7 +116,7 @@ const handleAddList = (event, index) => {
 
 }
 
-const emit = defineEmits(['focusItem', 'copyListFn', 'deleteListFn', 'addListFn', 'questionsLen']);
+const emit = defineEmits(['focusItem', 'questionsLen']);
 
 nextTick((index) => {
   // 滾動到新增的項目
@@ -127,6 +128,11 @@ nextTick((index) => {
     });
   }
 });
+
+defineExpose({
+  handleAddList
+});
+
 </script>
 
 <template>

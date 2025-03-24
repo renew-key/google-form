@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
 import { TrashOutline, CopyOutline, Add, CloseSharp } from "@vicons/ionicons5";
 import { NIcon, NSwitch, NCheckbox, NTabs, NModal, useMessage, NButton, NTabPane, NSelect } from "naive-ui";
 
@@ -18,7 +17,7 @@ const emit = defineEmits(['copyListFn', 'deleteListFn', 'addListFn']);
         <n-icon
           size="20"
           class="icon-copy"
-          @click="emit('copyListFn', $event, index)"
+          @click="emit('copyListFn', index)"
         >
           <CopyOutline />
         </n-icon>
@@ -27,7 +26,7 @@ const emit = defineEmits(['copyListFn', 'deleteListFn', 'addListFn']);
         <n-icon
           size="20"
           class="el-icon-delete"
-          @click="emit('deleteListFn', $event, index)"
+          @click="emit('deleteListFn', index)"
         >
           <TrashOutline />
         </n-icon>
@@ -36,7 +35,7 @@ const emit = defineEmits(['copyListFn', 'deleteListFn', 'addListFn']);
         <n-icon
           class="el-icon-plus"
           size="20"
-          @click="emit('addListFn', $event, index)"
+          @click="emit('addListFn', index)"
         >
           <Add />
         </n-icon>
