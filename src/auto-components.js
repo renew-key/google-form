@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    FormTab: typeof import('./components/Head/FormTab.vue')['default']
     FormTitle: typeof import('./components/Head/FormTitle.vue')['default']
     LangModal: typeof import('./components/Head/LangModal.vue')['default']
     QuestionActions: typeof import('./components/Main/QuestionActions.vue')['default']

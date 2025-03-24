@@ -1,6 +1,6 @@
 <script setup>
 import { useMessage, NIcon } from "naive-ui";
-import { TrashOutline, CopyOutline, Add, CloseSharp } from "@vicons/ionicons5";
+import { Add } from "@vicons/ionicons5";
 const message = useMessage();
 const focusIndex = ref(0);
 const activeTab = ref('中文');
@@ -12,7 +12,7 @@ const langCode = ['cn', 'en', 'kr', 'jp', 'fr', 'de', 'ru', 'sp', 'po', 'it', 'n
 const langList = ['中文', '英文', '韓語', '日語', '法語', '德語', '俄語', '西班牙語', '葡萄牙語', '義大利語', '荷蘭語', '印度語', '土耳其語', '泰語', '繁體中文', '波斯語', '羅馬尼亞語', '阿拉伯語'];
 
 // 管理所有的 Tab
-const tabs = ref(['中文', '英文']);
+const tabs = ref(['中文']);
 const addLangVisible = ref(false);
 // 當 Tab 被刪除時，從 tabs 陣列中移除
 const handleDeleteTab = (tab) => {
@@ -63,6 +63,8 @@ const addListFn = (index) => {
   }
   isShowAdd.value = false
 }
+
+
 const handleIndex = (res) => {
   // console.log(res)
   if (res <= 0) {
@@ -82,6 +84,17 @@ const handleIndex = (res) => {
   />
   <div class="form-create-wrap">
     <div class="wrap">
+      <FormTab
+        :langCode="langCode"
+        :langList="langList"
+        :tabs="tabs"
+        :activeTab="activeTab"
+        :focusIndex="focusIndex"
+        @focusTitle="focusTitle"
+        @deleteTab="handleDeleteTab"
+        @addTab="handleAddTab"
+        @activeTab="handleActiveTab"
+      />
       <FormTitle
         :langCode="langCode"
         :langList="langList"

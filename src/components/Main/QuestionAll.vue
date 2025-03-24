@@ -14,6 +14,7 @@ const props = defineProps({
   focusIndex: [String, Number],
 });
 
+
 const data = reactive({
   question: [{
     question_id: 1,
@@ -39,6 +40,37 @@ const data = reactive({
     ]
   }]
 })
+watch(() => props.activeTab, (newTab) => {
+  console.log(newTab)
+  // 重設 data.question 只保留一個初始的問題
+  data.question = [{
+    question_id: 1,
+    types: '單選題',
+    is_required: false,
+    content: [
+      {
+        language: 'cn',
+        title: '',
+        answer: [{
+          answer_id: 1,
+          description: null,
+          isOther: false
+        }],
+        line_answer: {
+          line_value: 1,
+          line_end_value: 5,
+          line_tag: '',
+          line_end_tag: ''
+        },
+        text_answer: ''
+      }
+    ]
+  }];
+
+  console.log(data)
+});
+
+
 
 
 const handleDeleteRadioFn = (i, j, k) => {
