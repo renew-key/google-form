@@ -12,7 +12,6 @@ declare module 'vue' {
     LangModal: typeof import('./components/Head/LangModal.vue')['default']
     QuestionActions: typeof import('./components/Main/QuestionActions.vue')['default']
     QuestionAll: typeof import('./components/Main/QuestionAll.vue')['default']
-    QuestionItem: typeof import('./components/Main/QuestionItem.vue')['default']
     QuestionLinearScale: typeof import('./components/Main/QuestionLinearScale.vue')['default']
     QuestionOptions: typeof import('./components/Main/QuestionOptions.vue')['default']
     QuestionText: typeof import('./components/Main/QuestionText.vue')['default']

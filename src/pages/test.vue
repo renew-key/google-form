@@ -64,7 +64,7 @@ const addListFn = (index) => {
   isShowAdd.value = false
 }
 const handleIndex = (res) => {
-  console.log(res)
+  // console.log(res)
   if (res <= 0) {
     isShowAdd.value = true
   } else {

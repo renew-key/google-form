@@ -71,7 +71,7 @@ const handleCopyList = (index) => {
 }
 
 const handleDeleteList = (i) => {
-  console.log("Delete")
+  // console.log("Delete")
   data.question.splice(i, 1)
   emit('questionsLen', i)
   // emit('focusItem', event, i === 0 && questions.length > 0 ? i : i - 1)
