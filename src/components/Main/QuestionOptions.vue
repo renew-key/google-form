@@ -8,10 +8,11 @@ const props = defineProps({
   index: Number,
   index1: Number,
   focusIndex: Number,
-  addRadio: String
+  addRadio: String,
+  addOther: String
 });
 
-const emit = defineEmits(['deleteRadioFn', 'addRadioFn']);
+const emit = defineEmits(['deleteRadioFn', 'addRadioFn', 'addOtherFn']);
 </script>
 
 <template>
@@ -30,7 +31,14 @@ const emit = defineEmits(['deleteRadioFn', 'addRadioFn']);
         class="icon-radio"
         :class="{ 'icon-cirle': element.types === '單選題', 'icon-square': element.types === '多選題' }"
       />
+      <div
+        v-if="item.isOther"
+        class="q-item text-wrap"
+      >
+        {{ item.description }}
+      </div>
       <input
+        v-else
         class="radio-input"
         v-model="item.description"
         :placeholder="`選項${i + 1}`"
@@ -63,10 +71,28 @@ const emit = defineEmits(['deleteRadioFn', 'addRadioFn']);
       >
         {{ addRadio }}
       </button>
+      <section v-if="!content.answer.some(item => item.isOther)">
+        <span style="margin-right: 0.2rem;">或</span>
+        <button
+          style="margin-top: 0.2rem;"
+          class="radio-add"
+          @click="emit('addOtherFn', index, index1)"
+        >
+          {{ addOther }}
+        </button>
+      </section>
     </div>
   </div>
 </template>
 <style scoped>
+.text-wrap {
+  color: var(--grey);
+  border-bottom: 1px dotted lightgray;
+  padding-bottom: 5px;
+  width: 100%;
+  text-align: left;
+}
+
 .q-item {
   margin-bottom: 10px;
 }
@@ -103,7 +129,8 @@ const emit = defineEmits(['deleteRadioFn', 'addRadioFn']);
 .q-radio input,
 .q-radio button {
   flex: 2;
-  margin-right: 15px;
+
+  /* margin-right: 15px;*/
   /* border: 1px solid transparent;*/
 }
 
@@ -135,6 +162,6 @@ const emit = defineEmits(['deleteRadioFn', 'addRadioFn']);
   border: none;
   font-size: 16px;
   text-align: left;
-  min-width: 80px;
+  min-width: 70px;
 }
 </style>

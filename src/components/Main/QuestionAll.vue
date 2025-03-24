@@ -5,7 +5,7 @@ import DragOutline from '@/assets/img/drag.png';
 import { NIcon, useMessage } from 'naive-ui';
 
 const addRadio = ref('添加選項');
-
+const addOther = ref('其他')
 const props = defineProps({
   tabs: Array,
   langCode: Array,
@@ -25,7 +25,8 @@ const data = reactive({
         title: '',
         answer: [{
           answer_id: 1,
-          description: null
+          description: null,
+          isOther: false
         }],
         line_answer: {
           line_value: 1,
@@ -39,12 +40,7 @@ const data = reactive({
   }]
 })
 
-const onMove = ({ relatedContext, draggedContext }) => {
-  let relatedIndex = relatedContext.index
-  let index = draggedContext.index
-  relatedContext.element.question_id = index + 1
-  draggedContext.element.question_id = relatedIndex + 1
-}
+
 const handleDeleteRadioFn = (i, j, k) => {
   data.question[i].content[j].answer.splice(k, 1);
 };
@@ -54,13 +50,58 @@ const handleAddRadioFn = (i, j) => {
   addFormFn(list);
 };
 
+const handleAddOtherFn = (i, j) => {
+  let list = data.question[i].content[j].answer;
+  addOtherFn(list);
+}
+
 const addFormFn = (list) => {
-  list.push({ answer_id: list.length + 1, description: null });
+  // 檢查是否已經有 "其他" 選項
+  const otherIndex = list.findIndex(item => item.isOther);
+
+  if (otherIndex !== -1) {
+    // 先移除 "其他" 選項，避免 `list = list.filter(...)` 破壞響應式
+    const otherItem = list[otherIndex];
+    list.splice(otherIndex, 1);
+
+    // 新增一般選項
+    list.push({ answer_id: list.length + 1, description: null, isOther: false });
+
+    // 把 "其他" 選項加回來，確保它在最後
+    list.push(otherItem);
+  } else {
+    // 沒有 "其他" 選項時，直接新增
+    list.push({ answer_id: list.length + 1, description: null, isOther: false });
+  }
+
   nextTick(() => {
     let input = document.querySelectorAll('.radio-input');
-    input[input.length - 1].focus();
+    if (input.length > 0) {
+      input[input.length - 1].focus();
+    }
   });
 };
+
+const addOtherFn = (list) => {
+  // 確保 "其他" 只會新增一次
+  const hasOther = list.some(item => item.isOther);
+
+  if (!hasOther) {
+    list.push({
+      answer_id: list.length + 1,
+      description: "其他...",
+      isOther: true
+    });
+  }
+
+  nextTick(() => {
+    let input = document.querySelectorAll('.radio-input');
+    if (input.length > 0) {
+      input[input.length - 1].focus();
+    }
+  });
+};
+
 
 const handleCopyList = (index) => {
   // console.log("Copy")
@@ -90,7 +131,8 @@ const handleAddList = (index) => {
       title: '',
       answer: [{
         answer_id: 1,
-        description: null
+        description: null,
+        isOther: false
       }],
       line_answer: {
         line_value: 1,
@@ -178,15 +220,15 @@ defineExpose({
               :index1="index1"
               :focusIndex="focusIndex"
               :addRadio="addRadio"
+              :addOther="addOther"
               @deleteRadioFn="handleDeleteRadioFn"
               @addRadioFn="handleAddRadioFn"
+              @addOtherFn="handleAddOtherFn"
             />
             <QuestionText v-if="element.types === '文本題'" />
             <QuestionLinearScale
               v-if="element.types === '線性量表'"
               :content="content"
-              :lineOptions="lineOptions"
-              :lineEndOptions="lineEndOptions"
             />
             <QuestionActions
               v-if="focusIndex === index"
