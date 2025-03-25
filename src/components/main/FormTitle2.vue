@@ -20,13 +20,8 @@ const emit = defineEmits(['focusTitle', 'deleteTab', 'addTab', 'activeTab']);
     @click="focusTitle($event)"
     :class="{ 'title-focus': focusIndex === -1 }"
   >
-  <langTab />
-    <Title
-      :langCode="langCode"
-      :langList="langList"
-      :tabs="tabs"
-      :tabLang="activeTab"
-    />
+    <langTab />
+    <title2/>
   </div>
 </template>
 

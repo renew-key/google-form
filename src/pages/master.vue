@@ -21,7 +21,7 @@ const message = useMessage();
 
   <div class="form-create-wrap">
     <div class="wrap">
-      <langTab />
+      <FormTitle2 />
     </div>
   </div>
 
