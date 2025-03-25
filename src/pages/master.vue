@@ -12,29 +12,16 @@ const { focusTitle, focusBlockTitle, focusItem } = formStyleStore;
 const LangStore = useLangStore();
 const { handleDeleteTab, handleAddLan } = LangStore;
 const message = useMessage();
-const addLangVisible = ref(false)
 
-const handleAddTab = () => {
-  addLangVisible.value = true;
-};
-const handleClose = () => {
-  addLangVisible.value = false;
-}
 
 </script>
 
 <template>
-  <LangAdd
-    :addLang="addLangVisible"
-    @closeModal="handleClose"
-  />
+  <LangAdd />
 
   <div class="form-create-wrap">
     <div class="wrap">
-      <langTab
-        @deleteTab="handleDeleteTab"
-        @addTab="handleAddTab"
-      />
+      <langTab />
     </div>
   </div>
 

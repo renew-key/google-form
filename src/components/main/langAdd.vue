@@ -3,20 +3,9 @@ import { NModal, NButton, NSelect, useMessage } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { useLangStore } from "@/stores/lang.js";
 const LangStore = useLangStore();
-const { langSelect, tabs, activeTab } = storeToRefs(LangStore)
-const { handleAddLan, getCnByCode } = LangStore;
+const { langSelect, addLangVisible } = storeToRefs(LangStore)
+const { handleAddLan, getCnByCode, handleClose } = LangStore;
 const message = useMessage()
-
-const addLang = ref(false)
-// 定義接收的 props
-const props = defineProps({
-  addLang: Boolean,  // 接收 addLang 控制顯示
-});
-
-// 定義 emit 事件
-const emit = defineEmits(['closeModal']);
-
-
 
 // 預設語言
 const defaultLang = ref('en');
@@ -32,50 +21,33 @@ const segmented = {
   footer: "soft"
 };
 
-// 取消 Modal
-const handleCloseModal = () => {
-  addLang.value = false;
-  emit('closeModal');  // 發送關閉 Modal 的事件
-};
+
 
 // 確認選擇語言
 const handleConfirm = () => {
   const isAdded = handleAddLan(defaultLang.value)
 
   if (isAdded) {
-    addLang.value = false;
-    handleCloseModal()
+    handleClose()
   }
   else {
     message.warning(`語言：${getCnByCode(defaultLang.value)} 已經添加過了，請檢查一下哦！`)
   }
-
-
 };
-watch(
-  () => props.addLang,
-  (newVal) => {
-    if (!newVal) {
-      addLang.value = false;
-      emit('closeModal');  // 如果 addLang 改為 false，發送關閉 Modal 的事件
-    } else {
-      addLang.value = true;
-    }
-  }
-);
+
 
 </script>
 
 <template>
   <n-modal
-    v-model:show="addLang"
+    v-model:show="addLangVisible"
     preset="card"
     :style="bodyStyle"
     title="添加語言"
     :bordered="false"
     size="huge"
     :segmented="segmented"
-    @update:show="handleCloseModal"
+    @update:show="handleClose"
   >
     <div class="li-item">
       <span class="label">選擇語言</span>
@@ -93,7 +65,7 @@ watch(
     <div class="dialog-footer">
       <n-button
         type="error"
-        @click="handleCloseModal"
+        @click="handleClose"
         style="margin-right: 1rem;"
       >
         取消

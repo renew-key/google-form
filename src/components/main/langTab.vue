@@ -3,33 +3,15 @@ import { NTabs, NTabPane } from 'naive-ui';
 import { storeToRefs } from "pinia";
 import { useLangStore } from "@/stores/lang.js";
 const LangStore = useLangStore();
-const { langSelect, tabs, activeTab } = storeToRefs(LangStore)
-const { handleAddLan, handleDeleteTab } = LangStore;
-
-const emit = defineEmits(['deleteTab', 'AddTab', 'activeTab']);
+const { tabs, activeTab } = storeToRefs(LangStore)
+const { handleAddTab, handleDeleteTab } = LangStore;
 
 
 // 動態生成 closable 屬性，當 tabs 超過 1 時，才可以關閉
 const closable = computed(() => {
-  // console.log(tabs.value.length)
   return tabs.value.length > 1
 }
 );
-
-// 監聽新增 Tab 的事件
-const handleAddTab = () => {
-  emit('AddTab');
-  // console.log("111")
-};
-
-// 處理刪除 Tab 的事件
-const handleClose = (name) => {
-  emit('deleteTab', name);
-};
-
-const handleTabChange = () => {
-  emit('activeTab', activeTab.value);
-}
 </script>
 
 <template>
@@ -40,8 +22,7 @@ const handleTabChange = () => {
     :closable="closable"
     tab-style="min-width: 80px;"
     v-model:value="activeTab"
-    @update:value="handleTabChange"
-    @close="handleClose"
+    @close="handleDeleteTab"
     @add="handleAddTab"
   >
     <n-tab-pane

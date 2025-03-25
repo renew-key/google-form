@@ -30,6 +30,15 @@ export const useLangStore = defineStore('lang', () => {
   const tabs = ref(['繁體中文']) // 預設為 '繁體中文'
   const activeTab = ref('繁體中文')
 
+  const addLangVisible = ref(false)
+
+  const handleAddTab = () => {
+    addLangVisible.value = true
+  }
+  const handleClose = () => {
+    addLangVisible.value = false
+  }
+
   // 使用 getAllCodesByCn 來獲取對應的代碼
   const getCnByCode = (code) => {
     const lang = langSelect.value.find((lang) => lang.code === code)
@@ -124,11 +133,14 @@ export const useLangStore = defineStore('lang', () => {
     langSelect,
     tabs,
     activeTab,
+    addLangVisible,
     handleAddLan,
     handleDeleteTab,
     getCnByCode,
     getCodeByCn,
     getAllCnByCode,
     getAllCodesByCn,
+    handleAddTab,
+    handleClose,
   }
 })

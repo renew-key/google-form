@@ -12,6 +12,7 @@ declare module 'vue' {
     BTitle: typeof import('./components/demo/Head/BTitle.vue')['default']
     FormTab: typeof import('./components/demo/Head/FormTab.vue')['default']
     FormTitle: typeof import('./components/demo/Head/FormTitle.vue')['default']
+    FormTitle2: typeof import('./components/main/FormTitle2.vue')['default']
     LangAdd: typeof import('./components/main/langAdd.vue')['default']
     LangModal: typeof import('./components/demo/Head/LangModal.vue')['default']
     LangTab: typeof import('./components/main/langTab.vue')['default']
@@ -25,5 +26,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Tab: typeof import('./components/demo/Head/Tab.vue')['default']
     Title: typeof import('./components/demo/Head/Title.vue')['default']
+    Title2: typeof import('./components/main/title2.vue')['default']
   }
 }
