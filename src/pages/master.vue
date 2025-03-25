@@ -21,12 +21,49 @@ const message = useMessage();
 
   <div class="form-create-wrap">
     <div class="wrap">
-      <FormTitle2 />
+      <div
+        class="item title"
+        @click="focusTitle($event)"
+        :class="{ 'title-focus': focusIndex === -1 }"
+      >
+        <langTab />
+        <title2 />
+      </div>
+    </div>
+  </div>
+
+  <div class="form-create-wrap">
+    <div class="wrap">
+      <div
+        class="item title"
+        @click="focusBlockTitle($event)"
+        :class="{ 'title-focus': focusIndex === -2 }"
+      >
+        <blockTitle2 />
+      </div>
     </div>
   </div>
 
 </template>
 <style scoped>
+.form-title {
+  margin-bottom: 2rem;
+}
+
+.item {
+  width: 100%;
+  padding: 16px 24px 24px 42px;
+}
+
+.item.title {
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.title-focus {
+  border-left-color: var(--green) !important;
+}
+
 .form-create-wrap {
   --green: #4ca2ae;
   --grey: rgba(0, 0, 0, .5);

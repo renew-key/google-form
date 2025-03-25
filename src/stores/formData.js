@@ -12,7 +12,7 @@ export const useFormDataStore = defineStore('formData', () => {
         block: [
           {
             block_id: 1,
-            blockTitle: [{ questionnaire_blockTitle: '', desc: '' }],
+            blockTitle: { questionnaire_blockTitle: '', desc: '' },
             question: [
               {
                 question_id: 1,

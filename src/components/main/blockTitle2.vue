@@ -8,29 +8,29 @@ const { data } = storeToRefs(formDataStore)
 const LangStore = useLangStore();
 const { activeTab } = storeToRefs(LangStore)
 const { getCodeByCn } = LangStore;
-
+// console.log(data.value.content[getCodeByCn(activeTab.value)].block[0].blockTitle)
 
 </script>
 
 <template>
   <div>
-    <!-- 問卷標題 -->
+    <!-- 區塊標題 -->
     <div class="li">
       <textarea
         style="font-size: 1.2rem;"
         class="title-area"
-        placeholder="問卷標題"
-        v-model="data.content[getCodeByCn(activeTab)].questionnaire_name"
+        placeholder="區塊標題"
+        v-model="data.content[getCodeByCn(activeTab)].block[0].blockTitle.questionnaire_blockTitle"
       ></textarea>
     </div>
 
-    <!-- 問卷說明 -->
-    <div class="li">
+    <!-- 區塊說明 -->
+    <!-- <div class="li">
       <textarea
-        placeholder="問卷說明"
-        v-model="data.content[getCodeByCn(activeTab)].desc"
+        placeholder="區塊說明"
+        v-model="data.content[getCodeByCn(activeTab)].block[0].desc"
       ></textarea>
-    </div>
+    </div> -->
   </div>
 </template>
 
