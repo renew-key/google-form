@@ -22,9 +22,18 @@ const name = reactive([{
 const currentLang = computed(() => props.langCode[props.langList.indexOf(props.tabLang)]);
 
 watch(currentLang, (newLang) => {
+  // 過濾掉 name 中不在 tabs 裡的語言
+  name.forEach((item, index) => {
+    // console.log(props.tabs.includes(props.langList[props.langCode.indexOf(item.language)]))
+    if (!props.tabs.includes(props.langList[props.langCode.indexOf(item.language)])) {
+      name.splice(index, 1);  // 刪除不符合條件的項目
+    }
+  });
+  // console.log(name)
+  // 檢查 name 中是否已經有該語言，沒有則新增
   if (!name.some(item => item.language === newLang)) {
     name.push({
-      questionnaire_title: '',
+      questionnaire_name: '',
       desc: '',
       language: newLang
     });

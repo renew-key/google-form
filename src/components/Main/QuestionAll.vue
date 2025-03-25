@@ -48,14 +48,6 @@ watch(() => props.activeTab, (newTab) => {
   data.question.forEach((q) => {
     const existingContent = q.content.find(c => c.language === newLang);
 
-    // 使用 map 來將所有語言名稱生成為陣列
-    const langs = q.content.map(c => {
-      return props.langList[props.langCode.indexOf(c.language)];
-    });
-
-    // console.log(langs); // 輸出語言名稱的陣列
-    // console.log(q.content);
-
     // 過濾掉 content 中那些語言不在 props.tabs 裡的項目
     q.content = q.content.filter(c => props.tabs.includes(props.langList[props.langCode.indexOf(c.language)]));
 
