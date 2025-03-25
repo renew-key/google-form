@@ -41,15 +41,27 @@ const data = reactive({
   }]
 })
 watch(() => props.activeTab, (newTab) => {
-  // console.log(newTab)
-  // 重設 data.question 只保留一個初始的問題
-  data.question = [{
-    question_id: 1,
-    types: '單選題',
-    is_required: false,
-    content: [
-      {
-        language: newTab,
+  const newLang = props.langCode[props.langList.indexOf(newTab)];
+  // console.log(props.tabs);
+
+  // 遍歷所有問題，確保每個問題的 content 內包含該語言的資料
+  data.question.forEach((q) => {
+    const existingContent = q.content.find(c => c.language === newLang);
+
+    // 使用 map 來將所有語言名稱生成為陣列
+    const langs = q.content.map(c => {
+      return props.langList[props.langCode.indexOf(c.language)];
+    });
+
+    // console.log(langs); // 輸出語言名稱的陣列
+    // console.log(q.content);
+
+    // 過濾掉 content 中那些語言不在 props.tabs 裡的項目
+    q.content = q.content.filter(c => props.tabs.includes(props.langList[props.langCode.indexOf(c.language)]));
+
+    if (!existingContent) {
+      q.content.push({
+        language: newLang,
         title: '',
         answer: [{
           answer_id: 1,
@@ -63,12 +75,13 @@ watch(() => props.activeTab, (newTab) => {
           line_end_tag: ''
         },
         text_answer: ''
-      }
-    ]
-  }];
+      });
+    }
+  });
 
-  // console.log(data)
+  // console.log("目前問題內容:", JSON.parse(JSON.stringify(data.question)));
 });
+
 
 
 
