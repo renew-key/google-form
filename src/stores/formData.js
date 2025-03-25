@@ -8,10 +8,11 @@ export const useFormDataStore = defineStore('formData', () => {
     content: {
       zh: {
         // 初始化繁體中文的資料
-        title: [{ questionnaire_title: '預設標題', desc: '預設描述' }],
+        title: [{ questionnaire_title: '', desc: '' }],
         block: [
           {
-            blockTitle: [{ questionnaire_blockTitle: '預設區塊標題', desc: '區塊描述' }],
+            block_id: 1,
+            blockTitle: [{ questionnaire_blockTitle: '', desc: '' }],
             question: [
               {
                 question_id: 1,
@@ -19,11 +20,11 @@ export const useFormDataStore = defineStore('formData', () => {
                 is_required: false,
                 content: [
                   {
-                    title: '問題標題',
+                    title: '',
                     answer: [
                       {
                         answer_id: 1,
-                        description: '選項描述',
+                        description: '',
                       },
                     ],
                     line_answer: {

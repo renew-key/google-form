@@ -53,6 +53,7 @@ export const useLangStore = defineStore('lang', () => {
     title: [{ questionnaire_title: '', desc: '' }],
     block: [
       {
+        block_id: 1,
         blockTitle: [{ questionnaire_blockTitle: '', desc: '' }],
         question: [
           {
