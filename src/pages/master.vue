@@ -4,11 +4,13 @@ import { Add } from "@vicons/ionicons5";
 import { storeToRefs } from "pinia";
 import { useLangStore } from "@/stores/lang.js";
 import { useFormStyleStore } from "@/stores/formStyle.js";
+import { useFormDataStore } from "@/stores/formData.js";
+const formDataStore = useFormDataStore();
 const formStyleStore = useFormStyleStore();
 const { focusIndex } = storeToRefs(formStyleStore);
 const { focusTitle, focusBlockTitle, focusItem } = formStyleStore;
 const LangStore = useLangStore();
-const { handleDeleteTab } = LangStore;
+const { handleDeleteTab, handleAddLan } = LangStore;
 const message = useMessage();
 const addLangVisible = ref(false)
 
@@ -18,6 +20,7 @@ const handleAddTab = () => {
 const handleClose = () => {
   addLangVisible.value = false;
 }
+
 </script>
 
 <template>
