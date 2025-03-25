@@ -20,7 +20,7 @@ const { getCodeByCn } = LangStore;
         style="font-size: 1.2rem;"
         class="title-area"
         placeholder="問卷標題"
-        v-model="data.content[getCodeByCn(activeTab)].questionnaire_name"
+        v-model="data.content[getCodeByCn(activeTab)].title.questionnaire_title"
       ></textarea>
     </div>
 
@@ -28,7 +28,7 @@ const { getCodeByCn } = LangStore;
     <div class="li">
       <textarea
         placeholder="問卷說明"
-        v-model="data.content[getCodeByCn(activeTab)].desc"
+        v-model="data.content[getCodeByCn(activeTab)].title.desc"
       ></textarea>
     </div>
   </div>

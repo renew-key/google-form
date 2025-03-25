@@ -8,7 +8,7 @@ export const useFormDataStore = defineStore('formData', () => {
     content: {
       zh: {
         // 初始化繁體中文的資料
-        title: [{ questionnaire_title: '', desc: '' }],
+        title: { questionnaire_title: '', desc: '' },
         block: [
           {
             block_id: 1,
