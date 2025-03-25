@@ -1,17 +1,33 @@
 <script setup>
-import { NTabs, NTabPane } from 'naive-ui';
+import { NTabs, NTabPane, useDialog } from 'naive-ui';
 import { storeToRefs } from "pinia";
 import { useLangStore } from "@/stores/lang.js";
 const LangStore = useLangStore();
 const { tabs, activeTab } = storeToRefs(LangStore)
 const { handleAddTab, handleDeleteTab } = LangStore;
 
-
+const dialog = useDialog();
 // 動態生成 closable 屬性，當 tabs 超過 1 時，才可以關閉
 const closable = computed(() => {
   return tabs.value.length > 1
 }
 );
+
+const handleDelete = (lang) => {
+  dialog.warning({
+    title: "刪除語言",
+    content: `確定要刪除${lang}`,
+    positiveText: "確定",
+    negativeText: "取消",
+    draggable: true,
+    onPositiveClick: () => {
+      handleDeleteTab(lang)
+    },
+    onNegativeClick: () => {
+      message.error("Not Sure");
+    }
+  });
+}
 </script>
 
 <template>
@@ -22,7 +38,7 @@ const closable = computed(() => {
     :closable="closable"
     tab-style="min-width: 80px;"
     v-model:value="activeTab"
-    @close="handleDeleteTab"
+    @close="handleDelete"
     @add="handleAddTab"
   >
     <n-tab-pane
