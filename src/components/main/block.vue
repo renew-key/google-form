@@ -12,7 +12,7 @@ const { blockLen } = storeToRefs(blockStore)
 const formDataStore = useFormDataStore();
 const formStyleStore = useFormStyleStore();
 const { focusIndex } = storeToRefs(formStyleStore);
-const { focusTitle, focusBlockTitle, focusItem } = formStyleStore;
+const { focusBlockTitle, focusItem } = formStyleStore;
 
 const { data } = storeToRefs(formDataStore)
 const LangStore = useLangStore();
