@@ -1,8 +1,12 @@
 import { ref, computed } from 'vue'
 import { defineStore, storeToRefs } from 'pinia'
 import { useFormDataStore } from '@/stores/formData.js'
+import { useLangStore } from '@/stores/lang.js'
 
 export const useBlockStore = defineStore('block', () => {
+  const LangStore = useLangStore()
+  const { activeTab } = storeToRefs(LangStore)
+  const { getCodeByCn } = LangStore
   const FormDataStore = useFormDataStore()
   const { data } = storeToRefs(FormDataStore)
   // 定義移動 block 的 function，處理多語言
@@ -68,6 +72,15 @@ export const useBlockStore = defineStore('block', () => {
     const currentBlock = blocks[index]
     const previousBlock = blocks[index - 1]
 
+    // 如果前一個 blockTitle 為空，則使用當前 block 的 blockTitle
+    if (!previousBlock.blockTitle.questionnaire_blockTitle.trim()) {
+      previousBlock.blockTitle.questionnaire_blockTitle =
+        currentBlock.blockTitle.questionnaire_blockTitle
+    }
+    if (!previousBlock.blockTitle.desc.trim()) {
+      previousBlock.blockTitle.desc = currentBlock.blockTitle.desc
+    }
+
     // 把 question 合併到前一個 block
     previousBlock.question.push(...currentBlock.question)
 
@@ -85,5 +98,9 @@ export const useBlockStore = defineStore('block', () => {
     })
   }
 
-  return { moveBlock, addBlock, copyBlock, deleteBlock, mergeBlock }
+  const blockLen = computed(() => {
+    return data.value.content[getCodeByCn(activeTab.value)].block.length
+  })
+
+  return { moveBlock, addBlock, copyBlock, deleteBlock, mergeBlock, blockLen }
 })

@@ -5,13 +5,23 @@ import { storeToRefs } from "pinia";
 import { useLangStore } from "@/stores/lang.js";
 import { useFormStyleStore } from "@/stores/formStyle.js";
 import { useFormDataStore } from "@/stores/formData.js";
+import { useBlockStore } from "@/stores/block.js";
+const blockStore = useBlockStore();
+const { moveBlock, addBlock, copyBlock, deleteBlock, mergeBlock } = blockStore;
+const { blockLen } = storeToRefs(blockStore)
 const formDataStore = useFormDataStore();
+const { data } = storeToRefs(formDataStore)
 const formStyleStore = useFormStyleStore();
 const { focusIndex } = storeToRefs(formStyleStore);
 const { focusTitle, focusBlockTitle, focusItem } = formStyleStore;
 const LangStore = useLangStore();
-const { handleDeleteTab, handleAddLan } = LangStore;
+const { activeTab } = storeToRefs(LangStore)
+const { getCodeByCn } = LangStore;
 const message = useMessage();
+
+
+// console.log(activeTab)
+
 
 
 </script>
@@ -29,14 +39,22 @@ const message = useMessage();
         <langTab />
         <title2 />
       </div>
+      <div
+        class="add-list"
+        v-show="blockLen == 0"
+      >
+        <n-icon
+          @click="addBlock(getCodeByCn(activeTab), 0)"
+          class="el-icon-plus"
+          size="20"
+        >
+          <Add />
+        </n-icon>
+      </div>
     </div>
   </div>
 
-  <div class="form-create-wrap">
-    <div class="wrap">
-      <block />
-    </div>
-  </div>
+  <block />
 
 </template>
 <style scoped>
@@ -87,7 +105,7 @@ const message = useMessage();
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 66px;
+  bottom: -1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -119,10 +137,12 @@ const message = useMessage();
     width: 100%;
     padding-right: 0.2rem;
     margin: 0;
+
   }
 
   .form-create-wrap .wrap {
     width: 100%;
+
   }
 
 }

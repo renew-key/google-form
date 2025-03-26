@@ -8,6 +8,7 @@ import { useFormStyleStore } from "@/stores/formStyle.js";
 import { useBlockStore } from "@/stores/block.js";
 const blockStore = useBlockStore();
 const { moveBlock, addBlock, copyBlock, deleteBlock, mergeBlock } = blockStore;
+const { blockLen } = storeToRefs(blockStore)
 const formDataStore = useFormDataStore();
 const formStyleStore = useFormStyleStore();
 const { focusIndex } = storeToRefs(formStyleStore);
@@ -28,11 +29,11 @@ const getOptions = (order) => {
       label: "複製區段",
       key: "copy"
     },
-    order !== 1 && {
+    {
       label: "移動區段",
       key: "move"
     },
-    order !== 1 && {
+    {
       label: "刪除區段",
       key: "delete"
     },
@@ -56,61 +57,84 @@ const handleSelect = (key, index) => {
   } else if (key == 'move') {
 
   }
-  console.log("選擇:", key, index);
+  // console.log("選擇:", key, index);
 };
 // console.log(data.value.content[getCodeByCn(activeTab.value)].block[0].blockTitle)
 
 </script>
 
 <template>
-  <section
+  <div
+    class="form-create-wrap"
     v-for="(blockItem, index) in data.content[getCodeByCn(activeTab)].block"
     :key="blockItem.block_id"
   >
-    <div
-      class="item title"
-      @click="focusBlockTitle($event)"
-      :class="{ 'title-focus': focusIndex === -2 }"
-    >
-      <div>
-        <!-- 區塊標題 -->
-        <section style="display: flex;">
-          <div class="li">
-            <textarea
-              style="font-size: 1.2rem;"
-              class="title-area"
-              placeholder="區塊標題"
-              v-model="blockItem.blockTitle.questionnaire_blockTitle"
-            ></textarea>
+    <div class="wrap">
+      <div
+        class="item title"
+        @click="focusBlockTitle($event)"
+        :class="{ 'title-focus': focusIndex === -2 }"
+      >
+        <div>
+          <!-- 區塊標題 -->
+          <section style="display: flex;">
+            <div class="li">
+              <textarea
+                style="font-size: 1.2rem;"
+                class="title-area"
+                placeholder="區塊標題"
+                v-model="blockItem.blockTitle.questionnaire_blockTitle"
+              ></textarea>
 
-          </div>
-          <n-dropdown
-            :options="getOptions(blockItem.order)"
-            trigger="click"
-            @select="(key) => handleSelect(key, index)"
-          >
-            <n-icon
-              size="25"
-              class="more-icon"
+            </div>
+            <n-dropdown
+              :options="getOptions(blockItem.order)"
+              trigger="click"
+              @select="(key) => handleSelect(key, index)"
             >
-              <MdMore />
-            </n-icon>
-          </n-dropdown>
-        </section>
-      </div>
+              <n-icon
+                size="25"
+                class="more-icon"
+              >
+                <MdMore />
+              </n-icon>
+            </n-dropdown>
+          </section>
+        </div>
 
-      <!-- 區塊說明 -->
-      <!-- <div class="li">
+        <!-- 區塊說明 -->
+        <!-- <div class="li">
       <textarea
         placeholder="區塊說明"
         v-model="blockItem.desc"
       ></textarea>
     </div> -->
+      </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <style scoped>
+.form-create-wrap {
+  --green: #4ca2ae;
+  --grey: rgba(0, 0, 0, .5);
+  position: relative;
+  width: 80%;
+
+  margin: 2rem auto;
+}
+
+.wrap {
+  width: 780px;
+  min-height: 100px;
+  margin: 0 auto;
+  display: flex;
+  background-color: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .1);
+  /*padding: 2rem 4rem;*/
+  flex-direction: column;
+}
+
 .more-icon {
   border-radius: 50%;
   margin: 1rem;
@@ -191,5 +215,19 @@ const handleSelect = (key, index) => {
 .form-create-wrap input::-webkit-input-placeholder,
 .form-create-wrap textarea::-webkit-input-placeholder {
   color: rgba(0, 0, 0, .5);
+}
+
+@media (max-width: 920px) {
+  .form-create-wrap {
+    width: 100%;
+    padding-right: 0.2rem;
+    margin: 0;
+    margin-top: 0.5rem;
+  }
+
+  .form-create-wrap .wrap {
+    width: 100%;
+  }
+
 }
 </style>
