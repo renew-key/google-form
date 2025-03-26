@@ -28,11 +28,11 @@ const getOptions = (order) => {
       label: "複製區段",
       key: "copy"
     },
-    {
+    order !== 1 && {
       label: "移動區段",
       key: "move"
     },
-    {
+    order !== 1 && {
       label: "刪除區段",
       key: "delete"
     },
