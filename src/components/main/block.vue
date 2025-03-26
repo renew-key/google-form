@@ -44,6 +44,19 @@ const getOptions = (order) => {
   ].filter(Boolean); // 過濾掉 false 或 null 的值，讓選單不顯示
 };
 
+const blockOptions = computed(() => {
+  const blocks = data.content[getCodeByCn(activeTab.value)].block;
+
+  return [
+    { label: "前往下個區段", value: "next" }, // 固定選項
+    ...blocks.map((block) => ({
+      label: `前往區段 ${block.order} (${block.blockTitle.questionnaire_blockTitle || "無標題"})`,
+      value: "block.order",
+    })),
+    { label: "提交表單", value: "send" }, // 固定選項
+  ];
+});
+
 const handleSelect = (key, index) => {
   const lang = getCodeByCn(activeTab.value)
   if (key == 'add') {
@@ -59,7 +72,22 @@ const handleSelect = (key, index) => {
   }
   // console.log("選擇:", key, index);
 };
-// console.log(data.value.content[getCodeByCn(activeTab.value)].block[0].blockTitle)
+
+// // 使用 watchEffect 監聽語言的切換與內容更新
+watchEffect(() => {
+
+  const blocks = data.value.content[getCodeByCn(activeTab.value)].block
+
+  blocks.forEach((block, index) => {
+    // 若是最後一個區塊，設為 'send'，其他設為 'next'
+    block.nextStep = index === blocks.length - 1 ? 'send' : 'next'
+
+    // 控制是否顯示選擇框，只有在最後一個區塊才顯示
+    block.isShowBlockChoose = index === blocks.length - 1 ? false : true
+  })
+})
+
+
 
 </script>
 
@@ -72,8 +100,8 @@ const handleSelect = (key, index) => {
     <div class="wrap">
       <div
         class="item title"
-        @click="focusBlockTitle($event)"
-        :class="{ 'title-focus': focusIndex === -2 }"
+        @click="focusBlockTitle($event, `block_${index}`)"
+        :class="{ 'title-focus': focusIndex === `block_${index}` }"
       >
         <div>
           <!-- 區塊標題 -->
@@ -110,11 +138,25 @@ const handleSelect = (key, index) => {
       ></textarea>
     </div> -->
       </div>
+
     </div>
+    <p
+      class="footer"
+      v-if="blockItem.isShowBlockChoose"
+    >於區段{{ index + 1 }}後 前往</p>
   </div>
 </template>
 
 <style scoped>
+.footer {
+  width: 780px;
+  margin: 0 auto;
+  margin-top: 1rem;
+  font-size: 1rem;
+  display: flex;
+  background-color: transparent;
+}
+
 .form-create-wrap {
   --green: #4ca2ae;
   --grey: rgba(0, 0, 0, .5);
@@ -227,6 +269,14 @@ const handleSelect = (key, index) => {
 
   .form-create-wrap .wrap {
     width: 100%;
+  }
+
+  .footer {
+    width: 100%;
+
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    background-color: transparent;
   }
 
 }

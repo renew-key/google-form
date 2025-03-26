@@ -1,7 +1,13 @@
 import { defineStore } from 'pinia'
-import { reactive } from 'vue'
+import { reactive, watchEffect } from 'vue'
+import { useLangStore } from '@/stores/lang.js'
+import { storeToRefs } from 'pinia'
 
 export const useFormDataStore = defineStore('formData', () => {
+  const LangStore = useLangStore()
+  const { activeTab } = storeToRefs(LangStore)
+  const { getCodeByCn } = LangStore
+
   // 使用 reactive 來創建反應式的資料結構
   const data = reactive({
     languages: ['zh'], // 預設語言為繁體中文
@@ -11,6 +17,8 @@ export const useFormDataStore = defineStore('formData', () => {
         title: { questionnaire_title: '', desc: '' },
         block: [
           {
+            isShowBlockChoose: false,
+            nextStep: 'send', // 預設為最後區塊設為 send
             order: 1,
             block_id: 1,
             blockTitle: { questionnaire_blockTitle: '', desc: '' },

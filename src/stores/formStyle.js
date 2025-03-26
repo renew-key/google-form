@@ -17,7 +17,7 @@ export const useFormStyleStore = defineStore('formStyle', () => {
   return {
     focusIndex,
     focusTitle: (event) => handleFocus(event, -1),
-    focusBlockTitle: (event) => handleFocus(event, -2),
+    focusBlockTitle: (event, index) => handleFocus(event, index),
     focusItem: (event, i) => handleFocus(event, i),
   }
 })
