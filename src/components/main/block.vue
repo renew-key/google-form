@@ -1,6 +1,6 @@
 <script setup>
 import { MdMore } from "@vicons/ionicons4";
-import { NIcon, NDropdown } from "naive-ui";
+import { NIcon, NDropdown, NSelect } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { useLangStore } from "@/stores/lang.js";
 import { useFormDataStore } from "@/stores/formData.js";
@@ -44,18 +44,21 @@ const getOptions = (order) => {
   ].filter(Boolean); // 過濾掉 false 或 null 的值，讓選單不顯示
 };
 
-const blockOptions = computed(() => {
-  const blocks = data.content[getCodeByCn(activeTab.value)].block;
-
+const blockOptions = (index) => {
+  const blocks = data.value.content[getCodeByCn(activeTab.value)].block;
+  const currentBlockOrder = index + 1; // 獲取當前選擇的區段順序
+  // console.log(currentBlockOrder)
   return [
-    { label: "前往下個區段", value: "next" }, // 固定選項
-    ...blocks.map((block) => ({
-      label: `前往區段 ${block.order} (${block.blockTitle.questionnaire_blockTitle || "無標題"})`,
-      value: "block.order",
-    })),
-    { label: "提交表單", value: "send" }, // 固定選項
+    { label: "前往下個區段", value: "next" },
+    ...blocks
+      .filter((block) => block.order !== currentBlockOrder) // 排除當前區段
+      .map((block) => ({
+        label: `前往區段 ${block.order} (${block.blockTitle.questionnaire_blockTitle || "無標題"})`,
+        value: `block_${block.order}`,
+      })),
+    { label: "提交表單", value: "send" },
   ];
-});
+};
 
 const handleSelect = (key, index) => {
   const lang = getCodeByCn(activeTab.value)
@@ -75,17 +78,24 @@ const handleSelect = (key, index) => {
 
 // // 使用 watchEffect 監聽語言的切換與內容更新
 watchEffect(() => {
-
-  const blocks = data.value.content[getCodeByCn(activeTab.value)].block
+  const blocks = data.value.content[getCodeByCn(activeTab.value)].block;
 
   blocks.forEach((block, index) => {
-    // 若是最後一個區塊，設為 'send'，其他設為 'next'
-    block.nextStep = index === blocks.length - 1 ? 'send' : 'next'
+    // 如果是最後一個區段，將 nextStep 設為 'send'
+    if (index === blocks.length - 1) {
+      block.nextStep = 'send';
+    } else {
+      // 如果不是最後一個區段，且 nextStep 還沒有是 'send'，則設為 'next'
+      if (block.nextStep == 'send') {
+        block.nextStep = 'next';
+      }
+    }
 
     // 控制是否顯示選擇框，只有在最後一個區塊才顯示
-    block.isShowBlockChoose = index === blocks.length - 1 ? false : true
-  })
-})
+    block.isShowBlockChoose = index === blocks.length - 1 ? false : true;
+  });
+});
+
 
 
 
@@ -140,10 +150,17 @@ watchEffect(() => {
       </div>
 
     </div>
+
     <p
       class="footer"
       v-if="blockItem.isShowBlockChoose"
-    >於區段{{ index + 1 }}後 前往</p>
+    >
+    <section class="text">於區段{{ index + 1 }}後 </section> <n-select
+      :bordered="false"
+      class="block-choose-width"
+      v-model:value="blockItem.nextStep"
+      :options="blockOptions(index)"
+    /></p>
   </div>
 </template>
 
@@ -155,6 +172,25 @@ watchEffect(() => {
   font-size: 1rem;
   display: flex;
   background-color: transparent;
+  align-items: center;
+  justify-content: left;
+}
+
+.text {
+  display: flex;
+  justify-content: left;
+
+}
+
+.block-choose-width {
+  max-width: 200px;
+  display: flex;
+  justify-content: left;
+  border: none !important;
+}
+
+.n-select {
+  border: none !important;
 }
 
 .form-create-wrap {
@@ -272,12 +308,14 @@ watchEffect(() => {
   }
 
   .footer {
-    width: 100%;
-
+    width: 95%;
+    display: flex;
     margin-top: 0.5rem;
     font-size: 0.8rem;
     background-color: transparent;
   }
+
+
 
 }
 </style>

@@ -18,7 +18,7 @@ export const useFormDataStore = defineStore('formData', () => {
         block: [
           {
             isShowBlockChoose: false,
-            nextStep: 'send', // 預設為最後區塊設為 send
+            nextStep: 'next', // 預設為最後區塊設為 send
             order: 1,
             block_id: 1,
             blockTitle: { questionnaire_blockTitle: '', desc: '' },

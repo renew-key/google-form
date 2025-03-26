@@ -35,6 +35,7 @@ export const useBlockStore = defineStore('block', () => {
       order: data.value.content[lang].block.length + 1, // 計算新區塊的 order
       block_id: data.value.content[lang].block.length + 1, // 設定新的 block_id
       blockTitle: { questionnaire_blockTitle: '', desc: '' },
+      nextStep: 'send',
       question: [],
     }
 
