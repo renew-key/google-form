@@ -36,7 +36,32 @@ export const useBlockStore = defineStore('block', () => {
       block_id: data.value.content[lang].block.length + 1, // 設定新的 block_id
       blockTitle: { questionnaire_blockTitle: '', desc: '' },
       nextStep: 'send',
-      question: [],
+      question: [
+        {
+          order: 1,
+          question_id: 1,
+          types: '單選題',
+          is_required: false,
+          content: [
+            {
+              title: '',
+              answer: [
+                {
+                  answer_id: 1,
+                  description: '',
+                },
+              ],
+              line_answer: {
+                line_value: 1,
+                line_end_value: 5,
+                line_tag: '',
+                line_end_tag: '',
+              },
+              text_answer: '',
+            },
+          ],
+        },
+      ],
     }
 
     // 在指定的 index 後插入新 block
