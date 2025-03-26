@@ -34,13 +34,7 @@ const message = useMessage();
 
   <div class="form-create-wrap">
     <div class="wrap">
-      <div
-        class="item title"
-        @click="focusBlockTitle($event)"
-        :class="{ 'title-focus': focusIndex === -2 }"
-      >
-        <blockTitle2 />
-      </div>
+      <block />
     </div>
   </div>
 

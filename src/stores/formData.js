@@ -11,10 +11,12 @@ export const useFormDataStore = defineStore('formData', () => {
         title: { questionnaire_title: '', desc: '' },
         block: [
           {
+            order: 1,
             block_id: 1,
             blockTitle: { questionnaire_blockTitle: '', desc: '' },
             question: [
               {
+                order: 1,
                 question_id: 1,
                 types: '單選題',
                 is_required: false,
