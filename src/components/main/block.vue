@@ -1,14 +1,13 @@
 <script setup>
 import { MdMore } from "@vicons/ionicons4";
-import { NIcon, NDropdown, NSelect } from "naive-ui";
+import { NIcon, NDropdown, NSelect, NModal, NCard } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { useLangStore } from "@/stores/lang.js";
 import { useFormDataStore } from "@/stores/formData.js";
 import { useFormStyleStore } from "@/stores/formStyle.js";
 import { useBlockStore } from "@/stores/block.js";
 const blockStore = useBlockStore();
-const { moveBlock, addBlock, copyBlock, deleteBlock, mergeBlock } = blockStore;
-const { blockLen } = storeToRefs(blockStore)
+const { addBlock, copyBlock, deleteBlock, mergeBlock } = blockStore;
 const formDataStore = useFormDataStore();
 const formStyleStore = useFormStyleStore();
 const { focusIndex } = storeToRefs(formStyleStore);
@@ -18,7 +17,7 @@ const { data } = storeToRefs(formDataStore)
 const LangStore = useLangStore();
 const { activeTab } = storeToRefs(LangStore)
 const { getCodeByCn } = LangStore;
-
+const showModalMove = ref(false);
 const getOptions = (order) => {
   return [
     {
@@ -71,7 +70,7 @@ const handleSelect = (key, index) => {
   } else if (key == 'merge') {
     mergeBlock(lang, index);
   } else if (key == 'move') {
-
+    showModalMove.value = true
   }
   // console.log("選擇:", key, index);
 };
@@ -96,12 +95,17 @@ watchEffect(() => {
   });
 });
 
-
+const handleCloseShow = (res) => {
+  showModalMove.value = res
+}
 
 
 </script>
 
 <template>
+  <n-modal v-model:show="showModalMove">
+    <blockMove @closeShow="handleCloseShow" />
+  </n-modal>
   <div
     class="form-create-wrap"
     v-for="(blockItem, index) in data.content[getCodeByCn(activeTab)].block"
@@ -155,12 +159,13 @@ watchEffect(() => {
       class="footer"
       v-if="blockItem.isShowBlockChoose"
     >
-    <section class="text">於區段{{ index + 1 }}後 </section> <n-select
-      :bordered="false"
-      class="block-choose-width"
-      v-model:value="blockItem.nextStep"
-      :options="blockOptions(index)"
-    /></p>
+      <span class="text">於區段{{ index + 1 }}後 </span> <n-select
+        :bordered="false"
+        class="block-choose-width"
+        v-model:value="blockItem.nextStep"
+        :options="blockOptions(index)"
+      />
+    </p>
   </div>
 </template>
 

@@ -9,6 +9,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Block: typeof import('./components/main/block.vue')['default']
+    BlockMove: typeof import('./components/main/blockMove.vue')['default']
     BlockTitle: typeof import('./components/demo/Head/BlockTitle.vue')['default']
     BlockTitle2: typeof import('./components/main/blockTitle2.vue')['default']
     BTitle: typeof import('./components/demo/Head/BTitle.vue')['default']

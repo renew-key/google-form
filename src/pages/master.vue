@@ -7,13 +7,13 @@ import { useFormStyleStore } from "@/stores/formStyle.js";
 import { useFormDataStore } from "@/stores/formData.js";
 import { useBlockStore } from "@/stores/block.js";
 const blockStore = useBlockStore();
-const { moveBlock, addBlock, copyBlock, deleteBlock, mergeBlock } = blockStore;
+const { addBlock } = blockStore;
 const { blockLen } = storeToRefs(blockStore)
 const formDataStore = useFormDataStore();
 const { data } = storeToRefs(formDataStore)
 const formStyleStore = useFormStyleStore();
 const { focusIndex } = storeToRefs(formStyleStore);
-const { focusTitle, focusBlockTitle, focusItem } = formStyleStore;
+const { focusTitle } = formStyleStore;
 const LangStore = useLangStore();
 const { activeTab } = storeToRefs(LangStore)
 const { getCodeByCn } = LangStore;

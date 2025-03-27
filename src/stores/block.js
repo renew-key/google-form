@@ -9,24 +9,45 @@ export const useBlockStore = defineStore('block', () => {
   const { getCodeByCn } = LangStore
   const FormDataStore = useFormDataStore()
   const { data } = storeToRefs(FormDataStore)
-  // 定義移動 block 的 function，處理多語言
+  // 新增 tempBlocks 來暫存拖曳後的排序
+  const tempBlocks = ref([])
+  // 監聽 activeTab 變更時，初始化 tempBlocks
+  watchEffect(() => {
+    const lang = getCodeByCn(activeTab.value)
+    tempBlocks.value = [...data.value.content[lang].block]
+    // console.log(tempBlocks.value)
+  })
+
+  // 移動 block，不影響正式數據
   const moveBlock = (fromIndex, toIndex) => {
-    // 取得所有語言的名稱
-    const languages = data.value.languages
+    if (toIndex < 0 || toIndex > tempBlocks.value.length - 1) {
+      return
+    }
+    // console.log(fromIndex, toIndex)
+    const item = tempBlocks.value.splice(fromIndex, 1)[0]
+    tempBlocks.value.splice(toIndex, 0, item)
+  }
 
-    // 對每個語言，處理對應的 block 移動
-    languages.forEach((lang) => {
-      const blocks = data.value.content[lang].block
+  // 確認移動，將 tempBlocks 實際寫入 data.value
+  const confirmMove = () => {
+    const lang = getCodeByCn(activeTab.value)
+    data.value.content[lang].block = [...tempBlocks.value]
 
-      // 移動指定索引的 block
-      const block = blocks.splice(fromIndex, 1)[0] // 移除要移動的區塊
-      blocks.splice(toIndex, 0, block) // 在新的位置插入區塊
-
-      // 更新 order，確保其順序正確
-      blocks.forEach((block, index) => {
-        block.order = index + 1 // 重新計算 order，從 1 開始
-      })
+    // 重新計算 order
+    data.value.content[lang].block.forEach((block, index) => {
+      block.order = index + 1
     })
+  }
+
+  const cancelMove = () => {
+    tempBlocks.value = []
+  }
+
+  // 拖曳結束後的回調函數
+  const onDragEnd = (evt) => {
+    console.log(evt.oldIndex, evt.newIndex)
+    moveBlock(evt.oldIndex - 2, evt.newIndex - 2) // 只影響 tempBlocks
+    // console.log(evt.oldIndex - 2, evt.newIndex - 2)
   }
 
   // 新增區塊，插入到所點擊的區塊下一個位置
@@ -128,5 +149,16 @@ export const useBlockStore = defineStore('block', () => {
     return data.value.content[getCodeByCn(activeTab.value)].block.length
   })
 
-  return { moveBlock, addBlock, copyBlock, deleteBlock, mergeBlock, blockLen }
+  return {
+    moveBlock,
+    addBlock,
+    copyBlock,
+    deleteBlock,
+    mergeBlock,
+    onDragEnd,
+    confirmMove,
+    cancelMove,
+    blockLen,
+    tempBlocks,
+  }
 })
