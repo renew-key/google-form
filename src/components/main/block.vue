@@ -150,17 +150,11 @@ const handleCloseShow = (res) => {
             </n-dropdown>
           </section>
         </div>
-
-        <!-- 區塊說明 -->
-        <!-- <div class="li">
-      <textarea
-        placeholder="區塊說明"
-        v-model="blockItem.desc"
-      ></textarea>
-    </div> -->
       </div>
+      <problemAll :index="index" />
 
     </div>
+
 
     <p
       class="footer"
@@ -218,13 +212,31 @@ const handleCloseShow = (res) => {
   margin: 2rem auto;
 }
 
+.form-create-wrap-question {
+  --green: #4ca2ae;
+  --grey: rgba(0, 0, 0, .5);
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.wrap-question {
+  width: 780px;
+  min-height: 100px;
+  margin: 0 auto;
+  display: flex;
+  background-color: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .1);
+  flex-direction: column;
+}
+
 .showWrap {
   color: white;
   background-color: #4ca2ae;
   border-radius: 12% 12% 0% 0%;
   width: 200px;
   min-height: 40px;
-  margin: 0 7.3rem;
+  margin: 0 7.7rem;
   position: absolute;
   /* 讓它脫離正常文檔流 */
   top: -2rem;
