@@ -53,7 +53,7 @@ const blockOptions = (index) => {
       .filter((block) => block.order !== currentBlockOrder) // 排除當前區段
       .map((block) => ({
         label: `前往區段 ${block.order} (${block.blockTitle.questionnaire_blockTitle || "無標題"})`,
-        value: `block_${block.order}`,
+        value: `block_${block.block_id}`,
       })),
     { label: "提交表單", value: "send" },
   ];
@@ -111,7 +111,14 @@ const handleCloseShow = (res) => {
     v-for="(blockItem, index) in data.content[getCodeByCn(activeTab)].block"
     :key="blockItem.block_id"
   >
-    <div class="wrap">
+    <div class="showWrap">
+      <span class="block-name">第{{ index + 1 }}區塊，共{{ data.content[getCodeByCn(activeTab)].block.length
+      }}個</span>
+    </div>
+    <div
+      class="wrap"
+      style="border-top: 10px solid #4ca2ae;"
+    >
       <div
         class="item title"
         @click="focusBlockTitle($event, `block_${index}`)"
@@ -170,6 +177,10 @@ const handleCloseShow = (res) => {
 </template>
 
 <style scoped>
+.block-name {
+  font-size: 1rem;
+}
+
 .footer {
   width: 780px;
   margin: 0 auto;
@@ -207,15 +218,34 @@ const handleCloseShow = (res) => {
   margin: 2rem auto;
 }
 
+.showWrap {
+  color: white;
+  background-color: #4ca2ae;
+  border-radius: 12% 12% 0% 0%;
+  width: 200px;
+  min-height: 40px;
+  margin: 0 7.3rem;
+  position: absolute;
+  /* 讓它脫離正常文檔流 */
+  top: -2rem;
+  /* 調整到 wrap 之上 */
+  left: 0;
+  /* 靠左對齊 */
+  text-align: center;
+
+}
+
 .wrap {
   width: 780px;
   min-height: 100px;
   margin: 0 auto;
+  margin-top: 4.2rem;
   display: flex;
   background-color: #fff;
   box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .1);
-  /*padding: 2rem 4rem;*/
   flex-direction: column;
+  position: relative;
+  /* 必須設置 relative，這樣 absolute 定位才是相對於這個元素 */
 }
 
 .more-icon {
@@ -310,6 +340,11 @@ const handleCloseShow = (res) => {
 
   .form-create-wrap .wrap {
     width: 100%;
+  }
+
+  .showWrap {
+    width: 40%;
+    margin: 0rem;
   }
 
   .footer {
