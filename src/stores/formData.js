@@ -28,6 +28,7 @@ export const useFormDataStore = defineStore('formData', () => {
                     answer: [
                       {
                         answer_id: 1,
+                        nextStep: 'next',
                         description: '',
                         isOther: false,
                       },
@@ -55,6 +56,12 @@ export const useFormDataStore = defineStore('formData', () => {
       // 如果是最後一個區段，將 nextStep 設為 'send'
       if (index === blocks.length - 1) {
         block.nextStep = 'send'
+        const contents = block.question
+        contents.forEach((content) => {
+          if (content.nextStep == 'next') {
+            content.nextStep = 'send'
+          }
+        })
       }
     })
   }
