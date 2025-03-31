@@ -20,16 +20,7 @@ const props = defineProps({
   c_index: Number
 });
 
-const handleQ = (type, l, i, j) => {
-  if (type == 'deleteRadioFn') {
-    const list = deleteRadioFn(l, i, j);
-  } else if (type == 'addOtherFn') {
-    const list = addOtherFn(l, i, j);
-  } else if (type == 'addRadioFn') {
-    const list = addRadioFn(l, i, j);
-  }
 
-}
 </script>
 
 <template>
@@ -57,7 +48,7 @@ const handleQ = (type, l, i, j) => {
       />
       <n-icon
         size="40"
-        @click="handleQ('deleteRadioFn', props.b_index, props.q_index, props.c_index, i)"
+        @click="deleteRadioFn(props.b_index, props.q_index, props.c_index, i)"
       >
         <CloseSharp />
       </n-icon>
@@ -66,7 +57,7 @@ const handleQ = (type, l, i, j) => {
       <div class="icon-radio icon-cirle" />
       <button
         class="radio-add"
-        @click="handleQ('addRadioFn', props.b_index, props.q_index, props.c_index)"
+        @click="addRadioFn(props.b_index, props.q_index, props.c_index)"
       >
         {{ addRadio }}
       </button>
@@ -75,7 +66,7 @@ const handleQ = (type, l, i, j) => {
         <button
           style="margin-top: 0.2rem;"
           class="radio-add"
-          @click="handleQ('addOtherFn', props.b_index, props.q_index, props.c_index)"
+          @click="addOtherFn(props.b_index, props.q_index, props.c_index)"
         >
           {{ addOther }}
         </button>

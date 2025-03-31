@@ -27,6 +27,7 @@ export const useFormDataStore = defineStore('formData', () => {
                     title: '',
                     answer: [
                       {
+                        order: 1,
                         answer_id: 1,
                         nextStep: 'next',
                         description: '',

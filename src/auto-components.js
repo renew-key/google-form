@@ -21,6 +21,7 @@ declare module 'vue' {
     LangTab: typeof import('./components/main/langTab.vue')['default']
     Problem: typeof import('./components/main/problem/problem.vue')['default']
     ProblemAll: typeof import('./components/main/problem/problemAll.vue')['default']
+    ProblemFooter: typeof import('./components/main/problem/problemFooter.vue')['default']
     ProblemLinearScale: typeof import('./components/main/problem/problemLinearScale.vue')['default']
     ProblemSignal: typeof import('./components/main/problem/problemSignal.vue')['default']
     ProblemText: typeof import('./components/main/problem/problemText.vue')['default']

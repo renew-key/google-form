@@ -68,6 +68,7 @@ const props = defineProps({
               :c_index="c_index"
               v-if="element.types === '單選題'"
             />
+            <!-- <problemFooter :b_index="props.index" /> -->
           </div>
         </div>
       </template>

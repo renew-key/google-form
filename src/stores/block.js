@@ -68,6 +68,7 @@ export const useBlockStore = defineStore('block', () => {
               title: '',
               answer: [
                 {
+                  order: 1,
                   answer_id: 1,
                   nextStep: 'next',
                   description: null,
