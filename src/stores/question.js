@@ -42,7 +42,7 @@ export const useQuestionStore = defineStore('question', () => {
       data.value.content[getCodeByCn(activeTab.value)].block[l].question[i].content[j].answer
     list.splice(k, 1)
     reorderList(list) // 重新排列 order
-    console.log(list)
+    // console.log(list)
   }
 
   // 新增 "其他" 選項
@@ -65,7 +65,7 @@ export const useQuestionStore = defineStore('question', () => {
       })
     }
     reorderList(list) // 重新排列 order
-    console.log(list)
+    // console.log(list)
   }
 
   // 新增一般選項 (處理 "其他" 的邏輯)
@@ -97,7 +97,7 @@ export const useQuestionStore = defineStore('question', () => {
       })
     }
     reorderList(list) // 重新排列 order
-    console.log(list)
+    // console.log(list)
   }
 
   return {

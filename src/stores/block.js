@@ -45,7 +45,7 @@ export const useBlockStore = defineStore('block', () => {
 
   // 拖曳結束後的回調函數
   const onDragEnd = (evt) => {
-    console.log(evt.oldIndex, evt.newIndex)
+    // console.log(evt.oldIndex, evt.newIndex)
     moveBlock(evt.oldIndex - 2, evt.newIndex - 2) // 只影響 tempBlocks
     // console.log(evt.oldIndex - 2, evt.newIndex - 2)
   }
