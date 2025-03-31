@@ -1,6 +1,4 @@
 <script setup>
-import { NSelect } from "naive-ui";
-import { ref, reactive, nextTick } from 'vue';
 import { storeToRefs } from 'pinia'
 import draggable from 'vuedraggable';
 import DragOutline from '@/assets/img/drag.png';
@@ -48,13 +46,27 @@ const props = defineProps({
           </div>
           <div
             class="q-item-wrap"
-            v-for="(content, index1) in element.content"
+            v-for="(content, c_index) in element.content"
           >
             <problemTitle
               :content="content"
               :element="element"
               :q_index="index"
               :b_index="props.index"
+            />
+
+            <problemText v-if="element.types === '文本題'" />
+
+            <problemLinearScale
+              :content="content"
+              v-if="element.types === '線性量表'"
+            />
+            <problemSignal
+              :content="content"
+              :b_index="props.index"
+              :q_index="index"
+              :c_index="c_index"
+              v-if="element.types === '單選題'"
             />
           </div>
         </div>

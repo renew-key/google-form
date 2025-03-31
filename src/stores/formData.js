@@ -30,6 +30,7 @@ export const useFormDataStore = defineStore('formData', () => {
                       {
                         answer_id: 1,
                         description: '',
+                        isOther: false,
                       },
                     ],
                     line_answer: {

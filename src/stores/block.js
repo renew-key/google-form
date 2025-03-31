@@ -69,7 +69,8 @@ export const useBlockStore = defineStore('block', () => {
               answer: [
                 {
                   answer_id: 1,
-                  description: '',
+                  description: null,
+                  isOther: false,
                 },
               ],
               line_answer: {

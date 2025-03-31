@@ -19,5 +19,6 @@ export const useFormStyleStore = defineStore('formStyle', () => {
     focusTitle: (event) => handleFocus(event, -1),
     focusBlockTitle: (event, index) => handleFocus(event, index),
     focusItem: (event, i) => handleFocus(event, i),
+    focusItemQuestion: (event, i) => handleFocus(event, i),
   }
 })
