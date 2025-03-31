@@ -7,7 +7,7 @@ import { useFormDataStore } from "@/stores/formData.js";
 import { useFormStyleStore } from "@/stores/formStyle.js";
 import { useBlockStore } from "@/stores/block.js";
 const blockStore = useBlockStore();
-const { addBlock, copyBlock, deleteBlock, mergeBlock } = blockStore;
+const { addBlock, copyBlock, deleteBlock, mergeBlock, blockOptions } = blockStore;
 const formDataStore = useFormDataStore();
 const formStyleStore = useFormStyleStore();
 const { focusIndex } = storeToRefs(formStyleStore);
@@ -43,21 +43,7 @@ const getOptions = (order) => {
   ].filter(Boolean); // 過濾掉 false 或 null 的值，讓選單不顯示
 };
 
-const blockOptions = (index) => {
-  const blocks = data.value.content[getCodeByCn(activeTab.value)].block;
-  const currentBlockOrder = index + 1; // 獲取當前選擇的區段順序
-  // console.log(currentBlockOrder)
-  return [
-    { label: "前往下個區段", value: "next" },
-    ...blocks
-      .filter((block) => block.order !== currentBlockOrder) // 排除當前區段
-      .map((block) => ({
-        label: `前往區段 ${block.order} (${block.blockTitle.questionnaire_blockTitle || "無標題"})`,
-        value: `block_${block.block_id}`,
-      })),
-    { label: "提交表單", value: "send" },
-  ];
-};
+
 
 const handleSelect = (key, index) => {
   const lang = getCodeByCn(activeTab.value)
@@ -80,16 +66,6 @@ watchEffect(() => {
   const blocks = data.value.content[getCodeByCn(activeTab.value)].block;
 
   blocks.forEach((block, index) => {
-    // 如果是最後一個區段，將 nextStep 設為 'send'
-    if (index === blocks.length - 1) {
-      block.nextStep = 'send';
-    } else {
-      // 如果不是最後一個區段，且 nextStep 還沒有是 'send'，則設為 'next'
-      if (block.nextStep == 'send') {
-        block.nextStep = 'next';
-      }
-    }
-
     // 控制是否顯示選擇框，只有在最後一個區塊才顯示
     block.isShowBlockChoose = index === blocks.length - 1 ? false : true;
   });

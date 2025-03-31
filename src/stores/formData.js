@@ -3,7 +3,6 @@ import { reactive, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 
 export const useFormDataStore = defineStore('formData', () => {
-  // 使用 reactive 來創建反應式的資料結構
   const data = reactive({
     languages: ['zh'], // 預設語言為繁體中文
     content: {
@@ -49,6 +48,16 @@ export const useFormDataStore = defineStore('formData', () => {
       },
     },
   })
+
+  const sendLast = () => {
+    const blocks = data.value.content[getCodeByCn(activeTab.value)].block
+    blocks.forEach((block, index) => {
+      // 如果是最後一個區段，將 nextStep 設為 'send'
+      if (index === blocks.length - 1) {
+        block.nextStep = 'send'
+      }
+    })
+  }
 
   return { data }
 })

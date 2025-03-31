@@ -150,12 +150,29 @@ export const useBlockStore = defineStore('block', () => {
     return data.value.content[getCodeByCn(activeTab.value)].block.length
   })
 
+  const blockOptions = (index) => {
+    const blocks = data.value.content[getCodeByCn(activeTab.value)].block
+    const currentBlockOrder = index + 1 // 獲取當前選擇的區段順序
+    // console.log(currentBlockOrder)
+    return [
+      { label: '前往下個區段', value: 'next' },
+      ...blocks
+        .filter((block) => block.order !== currentBlockOrder) // 排除當前區段
+        .map((block) => ({
+          label: `前往區段 ${block.order} (${block.blockTitle.questionnaire_blockTitle || '無標題'})`,
+          value: `block_${block.block_id}`,
+        })),
+      { label: '提交表單', value: 'send' },
+    ]
+  }
+
   return {
     moveBlock,
     addBlock,
     copyBlock,
     deleteBlock,
     mergeBlock,
+    blockOptions,
     onDragEnd,
     confirmMove,
     cancelMove,
