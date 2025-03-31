@@ -6,6 +6,13 @@ import draggable from 'vuedraggable';
 import DragOutline from '@/assets/img/drag.png';
 import { useFormStyleStore } from "@/stores/formStyle.js";
 import { useQuestionStore } from "@/stores/question.js";
+import { useFormDataStore } from '@/stores/formData.js'
+import { useLangStore } from '@/stores/lang.js'
+const LangStore = useLangStore()
+const { activeTab } = storeToRefs(LangStore)
+const { getCodeByCn } = LangStore
+const FormDataStore = useFormDataStore()
+const { data } = storeToRefs(FormDataStore)
 const formStyleStore = useFormStyleStore();
 const { focusIndex } = storeToRefs(formStyleStore);
 const questionStore = useQuestionStore();
@@ -20,7 +27,18 @@ const props = defineProps({
   c_index: Number
 });
 
+// 當你初始化數據時，可以為每個選項分配原始索引
+const initAnswers = (answers) => {
+  answers.forEach((item, index) => {
+    item.originalIndex = index;  // 為每個選項設置 originalIndex
+  });
+};
 
+// 初始化選項時可以調用此方法
+
+onMounted(() => {
+  initAnswers(data.value.content[getCodeByCn(activeTab.value)].block[props.b_index].question[props.q_index].content[props.c_index].answer);
+})
 </script>
 
 <template>

@@ -57,6 +57,7 @@ export const useQuestionStore = defineStore('question', () => {
       const newAnswerId = generateUniqueAnswerId()
 
       list.push({
+        originalIndex: list.length,
         nextStep: 'next',
         order: newOrder,
         answer_id: newAnswerId,
@@ -79,6 +80,7 @@ export const useQuestionStore = defineStore('question', () => {
     if (otherIndex !== -1) {
       const otherItem = list.splice(otherIndex, 1)[0]
       list.push({
+        originalIndex: list.length,
         nextStep: 'next',
         order: newOrder,
         answer_id: newAnswerId,
@@ -89,6 +91,7 @@ export const useQuestionStore = defineStore('question', () => {
       list.push(otherItem) // 把 "其他" 選項放回最後
     } else {
       list.push({
+        originalIndex: list.length,
         order: newOrder,
         answer_id: newAnswerId,
         nextStep: 'next',

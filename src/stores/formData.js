@@ -1,8 +1,11 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import { reactive, watchEffect } from 'vue'
-import { storeToRefs } from 'pinia'
+import { useLangStore } from '@/stores/lang.js'
 
 export const useFormDataStore = defineStore('formData', () => {
+  const LangStore = useLangStore()
+  const { activeTab } = storeToRefs(LangStore)
+  const { getCodeByCn } = LangStore
   const data = reactive({
     languages: ['zh'], // 預設語言為繁體中文
     content: {
@@ -27,6 +30,7 @@ export const useFormDataStore = defineStore('formData', () => {
                     title: '',
                     answer: [
                       {
+                        originalIndex: 1,
                         order: 1,
                         answer_id: 1,
                         nextStep: 'next',
